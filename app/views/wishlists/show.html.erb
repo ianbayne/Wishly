@@ -1,2 +1,4 @@
-<h1>Wishlists#show</h1>
-<p>Find me in app/views/wishlists/show.html.erb</p>
+<h1><%= @wishlist.title %></h1>
+<% @wishlist.wishlist_items.each do |item| %>
+  <li style="text-decoration: <%= item.purchased_by ? "line-through" : "none" %>"><%= item.name %></li>
+<% end %>
