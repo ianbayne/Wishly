@@ -1,4 +1,12 @@
-<h1><%= @wishlist.title %></h1>
-<% @wishlist.wishlist_items.each do |item| %>
-  <li style="text-decoration: <%= item.purchased_by ? "line-through" : "none" %>"><%= item.name %></li>
-<% end %>
+<div class="bg-gray-200 h-screen">
+  <div class="w-5/6 mx-auto py-3">
+    <h1 class="text-2xl font-extrabold mb-5"><%= @wishlist.title %></h1>
+    <ul class="font-mono mb-5 pl-5">
+      <% @wishlist.wishlist_items.each do |item| %>
+        <li class="<%= item.purchased_by ? "line-through" : "" %>"><%= item.name %></li>
+      <% end %>
+    </ul>
+
+    <%= render 'shared/footer' %>
+  </div>
+</div>
