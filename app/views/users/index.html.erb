@@ -1,5 +1,12 @@
-<% @users.each do |user| %>
-  <li><%= link_to "#{user.first_name} #{user.last_name}", wishlist_path(user) %></li>
-<% end %>
+<div class="bg-gray-200 h-screen">
+  <div class="w-5/6 mx-auto py-3">
+    <h1 class="text-2xl font-extrabold mb-5">Wishlists you're subscribed to</h1>
+    <ul class="list-none font-mono mb-5 pl-5">
+      <% @users.each do |user| %>
+        <li><%= link_to "#{user.first_name} #{user.last_name}", wishlist_path(user) %></li>
+      <% end %>
+    </ul>
 
-<%= render 'shared/footer' %>
+    <%= render 'shared/footer' %>
+  </div>
+</div>
