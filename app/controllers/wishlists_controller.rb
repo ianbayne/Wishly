@@ -1,5 +1,4 @@
 class WishlistsController < ApplicationController
-  before_action :authenticate_user!
   before_action :load_wishlist, only: [:show, :edit, :update]
 
   def show
