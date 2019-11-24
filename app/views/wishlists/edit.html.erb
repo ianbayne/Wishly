@@ -1,2 +1,9 @@
 <h1>Wishlists#edit</h1>
 <p>Find me in app/views/wishlists/edit.html.erb</p>
+
+<%= form_with model: @wishlist, method: :patch do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+
+  <%= f.submit "Update title" %>
+<% end %>
