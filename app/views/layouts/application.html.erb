@@ -10,8 +10,13 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <div class="text-center bg-gray-200 text-gray-700 pt-2">
+      <% if notice %>
+        <p class="notice bg-blue-200 py-5 mt-2 w-full"><%= notice %></p>
+      <% elsif alert %>
+        <p class="alert bg-red-200 py-5 mt-2 w-full"><%= alert %></p>
+      <% end %>
+    </div>
 
     <%= yield %>
   </body>
