@@ -1,6 +1,8 @@
 <div class="bg-gray-200 h-screen">
   <div class="w-5/6 mx-auto py-3">
-    <h1 class="text-2xl font-extrabold mb-5"><%= @wishlist.title %></h1>
+    <div class="flex items-center mb-5">
+      <h1 class="text-2xl font-extrabold"><%= @wishlist.title %></h1><%= link_to "Edit", edit_wishlist_path(@wishlist), class: "text-sm ml-3 -mb-1" %>
+    </div>
     <ul class="font-mono mb-5 pl-5">
       <% @wishlist.wishlist_items.each do |item| %>
         <li class="<%= item.purchased_by ? "line-through" : "" %>"><%= item.name %></li>
