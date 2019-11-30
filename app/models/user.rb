@@ -5,4 +5,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :wishlist
+
+  def phone_number
+    PhoneNumber.new(
+      phone_data['country_code'],
+      phone_data['area_code'],
+      phone_data['number']
+    )
+  end
 end
