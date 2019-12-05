@@ -5,7 +5,9 @@
     </div>
     <ul class="font-mono mb-5 pl-5">
       <% @wishlist.wishlist_items.each do |item| %>
-        <li class="<%= item.purchased_by ? "line-through" : "" %>"><%= item.name %></li>
+        <% cache item do %>
+          <%= render item %>
+        <% end %>
       <% end %>
     </ul>
 

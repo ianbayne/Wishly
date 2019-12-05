@@ -1,5 +1,5 @@
 class WishlistItem < ApplicationRecord
-  belongs_to :wishlist
+  belongs_to :wishlist, touch: true
   belongs_to :purchased_by,
              foreign_key: 'purchased_by_id',
              class_name:  'User',
