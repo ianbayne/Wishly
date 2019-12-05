@@ -13,4 +13,13 @@ class User < ApplicationRecord
       phone_data['number']
     )
   end
+
+  def address
+    Address.new(address_city, address_state)
+  end
+
+  def address=(address)
+    self.address_city  = address.city
+    self.address_state = address.state
+  end
 end
