@@ -14,6 +14,12 @@ class User < ApplicationRecord
     )
   end
 
+  def phone_number=(phone_number)
+    phone_data['country_code'] = phone_number.country_code
+    phone_data['area_code']    = phone_number.area_code
+    phone_data['number']       = phone_number.number
+  end
+
   def address
     Address.new(address_city, address_state)
   end
