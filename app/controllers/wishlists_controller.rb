@@ -16,7 +16,7 @@ class WishlistsController < ApplicationController
 
   def update
     if @wishlist.update(wishlist_params)
-      redirect_to wishlist_path(@wishlist), notice: 'Successfully updated your wishlist.'
+      redirect_to edit_wishlist_path(@wishlist), notice: 'Successfully updated your wishlist.'
     else
       flash.now[:alert] = 'Something went wrong.'
       render :edit
