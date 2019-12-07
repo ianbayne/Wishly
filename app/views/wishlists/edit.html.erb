@@ -1,7 +1,7 @@
 <div class="bg-gray-200 h-screen flex items-center justify-center flex-col">
   <div class="w-5/6 mx-auto py-3">
     <div class="flex items-center mb-5">
-      <h1 class="text-2xl font-extrbold">Edit your wishlist <%= @wishlist.title %></h1>
+      <h1 class="text-2xl font-extrabold">Edit your wishlist <%= @wishlist.title %></h1>
     </div>
 
     <%= form_with model: @wishlist, method: :patch do |f| %>
