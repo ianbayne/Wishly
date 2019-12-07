@@ -17,11 +17,7 @@
 
     <% if @wishlist.wishlist_items.any? %>
       <ul class="font-mono mb-5 pl-5">
-        <% @wishlist.wishlist_items.each do |item| %>
-          <li>
-            <%= item.name %>
-          </li>
-        <% end %>
+        <%= render partial: "wishlist_items/wishlist_item", collection: @wishlist.wishlist_items, cached: true %>
       </ul>
     <% end %>
 

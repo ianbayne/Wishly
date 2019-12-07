@@ -2,11 +2,7 @@
   <div class="w-5/6 mx-auto py-3">
     <h1 class="text-2xl font-extrabold mb-5">Wishlists you're subscribed to</h1>
     <ul class="list-none font-mono mb-5 pl-5">
-      <% @decorated_users.each do |decorated_user| %>
-        <% cache decorated_user do %>
-          <%= render decorated_user %>
-        <% end %>
-      <% end %>
+      <%= render partial: "user", collection: @decorated_users, cached: true %>
     </ul>
 
     <%= render 'shared/footer' %>
