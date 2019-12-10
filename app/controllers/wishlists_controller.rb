@@ -1,14 +1,24 @@
 class WishlistsController < ApplicationController
-  load_and_authorize_resource
+  # TODO: load_and_authorize_resource for other actions?
+  load_and_authorize_resource only: [:show, :edit]
   before_action :load_wishlist, only: [:show, :edit, :update]
 
   def show
   end
 
   def new
+    @form = CreateWishlistForm.new
   end
 
   def create
+    @form = CreateWishlistForm.new(wishlist_params.merge(current_user: current_user))
+
+    if @form.save
+      redirect_to wishlist_path(current_user.wishlist),
+        notice: 'Successfully created your wishlist'
+    else
+      render :new, alert: 'Something went wrong'
+    end
   end
 
   def edit
@@ -38,6 +48,9 @@ private
   end
 
   def wishlist_params
-    params.require(:wishlist).permit(:title)
+    params.require(:create_wishlist_form).permit(
+      :title,
+      :name
+    )
   end
 end
