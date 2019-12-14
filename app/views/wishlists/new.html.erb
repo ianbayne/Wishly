@@ -4,18 +4,23 @@
       <h1 class="text-2xl font-extrabold">Create a new wishlist</h1>
     </div>
 
+    <!-- TODO: Refactor new and edit to use same _form partial -->
     <%= form_with model: @wishlist do |f| %>
       <div class="field mb-4 w-64">
         <%= f.label :title, class: "form-label" %>
         <%= f.text_field :title, class: "form-input" %>
       </div>
 
-      <div id='wishlist_items'>
-        <%= f.fields_for :wishlist_items do |wishlist_item| %>
-          <%= render 'wishlist_item_fields', f: wishlist_item %>
-        <% end %>
-        <div class="links">
-          <%= link_to_add_association '+', f, :wishlist_items %>
+      <h2>Wishlist Items</h2>
+      <div data-controller="nested-form">
+        <template data-target="nested-form.template">
+          <%= f.fields_for :wishlist_items, WishlistItem.new, child_index: 'TEMPLATE_RECORD' do |wishlist_item| %>
+            <%= render 'wishlist_item_fields', f: wishlist_item %>
+          <% end %>
+        </template>
+
+        <div data-target="nested-form.add_item">
+          <%= link_to "Add item", "#", data: { action: "nested-form#add_association"} %>
         </div>
       </div>
 
@@ -23,27 +28,5 @@
         <%= f.submit "Create", class: "form-submit" %>
       </div>
     <% end %>
-
-  <!--
-    <%#= form_for @form, url: wishlists_path do |f| %>
-      <div class="field mb-4 w-64">
-        <%#= f.label :title, class: "form-label" %>
-        <%#= f.text_field :title, class: "form-input" %>
-      </div>
-
-      <div class="field mb-4 w-64">
-        <%#= f.label :wishlist_items, class: "form-label" %>
-        <%#= f.text_field :name, class: "form-input" %>
-      </div>
-
-      <div>
-        <button class="form-submit">+</button>
-      </div>
-
-      <div class="actions">
-        <%#= f.submit "Create", class: "form-submit" %>
-      </div>
-    <%# end %>
-  -->
   </div>
 </div>
