@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_one :wishlist
+  has_one :wishlist, dependent: :destroy
 
   def phone_number
     PhoneNumber.new(
