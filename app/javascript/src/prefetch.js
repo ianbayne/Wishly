@@ -1,5 +1,6 @@
 // SOURCE: https://github.com/turbolinks/turbolinks/issues/313
 // SOURCE: https://gist.github.com/hopsoft/ab500a3b584e2878c83137cb539abb32
+// NOTE: Anchors must explicitly opt-in to prefetch behavior. <a data-prefetch='true' ...>
 
 const hoverTime = 400;
 const fetchers = {};
