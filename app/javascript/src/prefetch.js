@@ -50,7 +50,6 @@ function cleanup(event) {
 document.addEventListener("mouseover", event => {
   if (!event.target.dataset.prefetch) return;
   const url = event.target.href;
-  console.log({ url });
   if (prefetched(url)) return;
   if (prefetching(url)) return;
   cleanup(event);
