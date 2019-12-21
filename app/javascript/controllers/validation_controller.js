@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["form"];
 
   submitForm(event) {
-    let isValid = this.validateForm(this.formTarget);
+    let isValid = this.validateForm();
 
     if (!isValid) {
       event.preventDefault();
