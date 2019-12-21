@@ -5,6 +5,7 @@ class WishlistsController < ApplicationController
   before_action :load_wishlist, only: [:show, :edit, :update]
 
   def show
+    @wishlist_items = @wishlist.wishlist_items.includes(:purchased_by)
   end
 
   def new
