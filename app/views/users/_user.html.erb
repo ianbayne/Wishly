@@ -1,6 +1,6 @@
 <li>
   <% if user.wishlist %>
-    <%= link_to user.full_name, wishlist_path(user.wishlist) %>
+    <%= link_to user.full_name, wishlist_path(user.wishlist), data: { prefetch: true } %>
   <% else %>
     <%= user.full_name %>
   <% end %>
