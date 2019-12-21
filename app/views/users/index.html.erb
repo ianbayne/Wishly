@@ -1,9 +1,12 @@
 <div class="bg-gray-200 h-screen">
   <div class="w-5/6 mx-auto py-3">
     <h1 class="text-2xl font-extrabold mb-5">Wishlists you're subscribed to</h1>
-    <ul class="list-none font-mono mb-5 pl-5">
-      <%= render partial: "user", collection: @decorated_users, cached: true %>
-    </ul>
+
+    <% if @decorated_users.any? %>
+      <ul class="list-none font-mono mb-5 pl-5">
+        <%= render partial: "user", collection: @decorated_users, cached: true %>
+      </ul>
+    <% end %>
 
     <%= render 'shared/footer' %>
   </div>
