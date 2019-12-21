@@ -13,7 +13,7 @@
 
       <h2>Wishlist Items</h2>
       <div data-controller="nested-form">
-        <% if @wishlist.wishlist_items.any? %>
+        <% if @wishlist.wishlist_items.load.any? %>
           <ul class="font-mono mb-5 pl-5">
             <%= render partial: "wishlist_items/wishlist_item", collection: @wishlist.wishlist_items, cached: true %>
           </ul>
