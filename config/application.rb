@@ -21,6 +21,9 @@ Bundler.require(*Rails.groups)
 
 module Wishly
   class Application < Rails::Application
+    # GZIP unzipped assets
+    config.middleware.insert_after ActionDispatch::Static, Rack::Deflater
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
