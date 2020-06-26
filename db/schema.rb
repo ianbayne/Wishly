@@ -13,16 +13,17 @@
 ActiveRecord::Schema.define(version: 2020_06_21_125028) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "wishlist_invitees", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "wishlist_id", null: false
+    t.uuid "user_id", null: false
+    t.uuid "wishlist_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_wishlist_invitees_on_user_id"
@@ -31,15 +32,15 @@ ActiveRecord::Schema.define(version: 2020_06_21_125028) do
 
   create_table "wishlist_items", force: :cascade do |t|
     t.string "name"
-    t.bigint "wishlist_id", null: false
+    t.uuid "wishlist_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["wishlist_id"], name: "index_wishlist_items_on_wishlist_id"
   end
 
-  create_table "wishlists", force: :cascade do |t|
+  create_table "wishlists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
-    t.bigint "user_id", null: false
+    t.uuid "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_wishlists_on_user_id"
