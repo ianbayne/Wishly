@@ -1,0 +1,40 @@
+<div id="errors-container"></div>
+
+<h1>Wishly!</h1>
+<h2>Create your wishlist</h2>
+
+<%= form_with model: @wishlist do |f| %>
+  <div>
+    <%= f.label :title, 'Wishlist Title:' %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.fields_for :owner do |owner_form| %>
+      <%= owner_form.label :email, 'Your email:' %>
+      <%= owner_form.email_field :email %>
+    <% end %>
+  </div>
+
+  <h3>Wishlist items:</h3>
+  <ul>
+    <%= f.fields_for :wishlist_items do |wishlist_items_form| %>
+      <li>
+        <%= wishlist_items_form.label :name %>
+        <%= wishlist_items_form.text_field :name %>
+      </li>
+    <% end %>
+  </ul>
+
+  <h3>Invite some people</h3>
+  <ul>
+    <%= f.fields_for :invitees do |invitees_form| %>
+      <li>
+        <%= invitees_form.label :email %>
+        <%= invitees_form.email_field :email %>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= f.submit 'Create new wishlist', data: { 'disable-with': 'Creating...' } %>
+<% end %>
