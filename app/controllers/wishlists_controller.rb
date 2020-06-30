@@ -9,6 +9,7 @@ class WishlistsController < ApplicationController
   def create
     @wishlist = Wishlist.new(wishlist_params)
     if @wishlist.save
+      send_emails
       redirect_to wishlist_path(@wishlist), notice: 'Wishlist created!'
     else
       respond_to do |format|
@@ -43,5 +44,18 @@ private
         :email
       ]
     )
+  end
+
+  def send_emails
+    owner    = @wishlist.owner
+    invitees = @wishlist.invitees
+
+    WishlistMailer.with(wishlist: @wishlist, recipient: owner)
+                  .new_wishlist_created.deliver_now
+
+    invitees.each do |invitee|
+      WishlistMailer.with(wishlist: @wishlist, recipient: invitee)
+                    .invited_to_wishlist.deliver_now
+    end
   end
 end
