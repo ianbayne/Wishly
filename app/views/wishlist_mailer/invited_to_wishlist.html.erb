@@ -1,8 +1,8 @@
 <p>Hi there,</p>
 <p>
-  <%= @wishlist.owner.email %> has invited you to their wishlist.
+  <%= @wishlist.owner.email %> has invited you to their wishlist, "<%= @wishlist.title %>."
 </p>
 <p>
-  If you know this individual, you can click <%= link_to 'here', wishlist_url(@wishlist, user_id: @recipient.id) %> to visit their wishlist.
+  If you know this individual, you can click <%= link_to 'here', wishlist_url(@wishlist, user_id: @recipient.id) %> to visit their wishlist and register your purchases so that other invitees can see what has and hasn't been purchased yet.
 </p>
 <p>Your friends at Wishly</p>

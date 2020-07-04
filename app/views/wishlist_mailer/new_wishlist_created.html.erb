@@ -1,5 +1,6 @@
 <p>Hi there,</p>
+<p>You've created a new wishlist, "<%= @wishlist.title %>"—congratulations!</p>
 <p>
-  You can visit your wishlist at any time to update it or to confirm what's on it by clicking <%= link_to 'here', wishlist_url(@wishlist, user_id: @recipient.id) %>.
+  You can visit your wishlist at any time to update it or to confirm what's on it by clicking <%= link_to 'here', wishlist_url(@wishlist, user_id: @recipient.id) %>. Note that you won't be able to see what items have and haven't been purchased by the people you invited to your list since not knowing what you're going to get is half the fun ;-)
 </p>
 <p>Your friends at Wishly</p>

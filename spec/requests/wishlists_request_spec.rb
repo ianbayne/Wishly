@@ -58,14 +58,29 @@ RSpec.describe 'Wishlists', type: :request do
       )
     end
 
-    it 'returns http success with a valid user id' do
+    it "returns http success with the owner's user id" do
       get "/wishlists/#{wishlist.id}?user_id=#{wishlist.owner.id}"
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it "returns http success with an invitee's user id" do
+      get "/wishlists/#{wishlist.id}?user_id=#{wishlist.invitees.first.id}"
 
       expect(response).to have_http_status(:success)
     end
 
     it 'redirects to the root page without a valid user id' do
       get "/wishlists/#{wishlist.id}"
+
+      expect(response).to redirect_to(root_url)
+    end
+
+    it 'redirects to the root page with a user id for which the user is not ' \
+       'the wishlist owner or an invitee' do
+      invalid_user = User.create!(email: 'invalid@example.com')
+
+      get "/wishlists/#{wishlist.id}?user_id=#{invalid_user.id}"
 
       expect(response).to redirect_to(root_url)
     end

@@ -30,7 +30,8 @@ class WishlistsController < ApplicationController
     @wishlist = Wishlist.find_by(id: params[:id])
     @user     = User.find_by(id: params[:user_id])
 
-    if @wishlist.nil? || @user.nil?
+    if @wishlist.nil? ||
+      (@wishlist.owner != @user && !@wishlist.invitees.include?(@user))
       redirect_to root_path, alert: 'The wishlist you are trying to access ' \
                                     'does not exist or you do not have ' \
                                     'access to it.'
