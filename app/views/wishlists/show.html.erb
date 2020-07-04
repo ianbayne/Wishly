@@ -1,6 +1,24 @@
+<div class="flash-container"></div>
+
 <h1><%= @wishlist.title %></h1>
-<% @wishlist.wishlist_items.each do |wishlist_item| %>
-  <ul>
-    <li><%= wishlist_item.name %></li>
+<% @wishlist.wishlist_items.includes(:purchase).each do |wishlist_item| %>
+  <ul style="max-width: 200px">
+    <div id="wishlist-item-<%= wishlist_item.id %>" style="display: flex; justify-content: space-between;">
+      <% if wishlist_item.purchased? %>
+        <div class="purchased-item">
+          <%= render partial: 'purchased_item', locals: { wishlist_item: wishlist_item } %>
+        </div>
+        <div class="purchase-button">
+          <%= render partial: 'cancel_purchase', locals: { wishlist: @wishlist, wishlist_item: wishlist_item, user_id: @user.id } %>
+        </div>
+      <% else %>
+        <div class="purchased-item">
+          <%= render partial: 'unpurchased_item', locals: { wishlist_item: wishlist_item } %>
+        </div>
+        <div class="purchase-button">
+          <%= render partial: 'purchase', locals: { wishlist: @wishlist, wishlist_item: wishlist_item, user_id: @user.id } %>
+        </div>
+      <% end %>
+    </div>
   </ul>
 <% end %>

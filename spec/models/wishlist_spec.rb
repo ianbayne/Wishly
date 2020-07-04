@@ -6,7 +6,7 @@ RSpec.describe Wishlist, type: :model do
 
   it 'is valid with a title and an owner' do
     wishlist.title = 'New wishlist'
-    wishlist.owner  = user
+    wishlist.owner = user
     wishlist.save
 
     expect(wishlist).to be_valid

@@ -10,7 +10,10 @@ class WishlistsController < ApplicationController
     @wishlist = Wishlist.new(wishlist_params)
     if @wishlist.save
       send_emails
-      redirect_to wishlist_path(@wishlist), notice: 'Wishlist created!'
+      redirect_to(
+        wishlist_path(@wishlist, user_id: @wishlist.owner.id),
+        notice: 'Wishlist created!'
+      )
     else
       respond_to do |format|
         failure_message = 'Your wishlist could not be created...'
@@ -25,6 +28,13 @@ class WishlistsController < ApplicationController
 
   def show
     @wishlist = Wishlist.find_by(id: params[:id])
+    @user     = User.find_by(id: params[:user_id])
+
+    if @wishlist.nil? || @user.nil?
+      redirect_to root_path, alert: 'The wishlist you are trying to access ' \
+                                    'does not exist or you do not have ' \
+                                    'access to it.'
+    end
   end
 
 private

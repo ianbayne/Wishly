@@ -1,0 +1,4 @@
+<% if flash %>
+  var flashContainer = document.getElementById('flash-container');
+  flashContainer.innerHTML = '<% flash.each do |key, value| %><%= content_tag "div", value, class: "#{key}" %><% end %>';
+<% end %>

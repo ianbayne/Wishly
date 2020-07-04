@@ -1,6 +1,4 @@
-<% if flash %>
-  document.getElementById('flash-container').innerHTML = '<% flash.each do |key, value| %><%= content_tag 'div', value, class: "#{key}" %><% end %>';
-<% end %>
+<%= render 'shared/flash' %>
 
 <% if @wishlist.errors.any? %>
   document.getElementById('errors-container').innerHTML = "<ul><% @wishlist.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul>";
