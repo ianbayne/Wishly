@@ -3,6 +3,6 @@ class ApplicationMailer < ActionMailer::Base
     "<#{SecureRandom.uuid}@#{ActionMailer::Base.smtp_settings[:domain]}>"
   }
 
-  default from: 'support@wishly.com'
+  default from: "wishly-support@#{ActionMailer::Base.smtp_settings[:domain]}"
   layout 'mailer'
 end
