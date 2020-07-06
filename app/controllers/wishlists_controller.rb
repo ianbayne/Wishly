@@ -2,8 +2,8 @@ class WishlistsController < ApplicationController
   def new
     @wishlist = Wishlist.new
     @wishlist.build_owner
-    3.times { @wishlist.wishlist_items.build }
-    3.times { @wishlist.invitees.build }
+    @wishlist.wishlist_items.build
+    @wishlist.invitees.build
   end
 
   def create

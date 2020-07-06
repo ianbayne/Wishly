@@ -3,7 +3,7 @@
 <h1>Wishly!</h1>
 <h2>Create your wishlist</h2>
 
-<%= form_with model: @wishlist do |f| %>
+<%= form_with model: @wishlist, data: { controller: 'wishlist' } do |f| %>
   <div>
     <%= f.label :title, 'Wishlist Title:' %>
     <%= f.text_field :title %>
@@ -17,7 +17,7 @@
   </div>
 
   <h3>Wishlist items:</h3>
-  <ul>
+  <ul data-target='wishlist.itemList'>
     <%= f.fields_for :wishlist_items do |wishlist_items_form| %>
       <li>
         <%= wishlist_items_form.label :name %>
@@ -25,9 +25,17 @@
       </li>
     <% end %>
   </ul>
+  <%= button_tag 'Add item', data: { action: 'click->wishlist#addItem' } %>
+
+  <template data-target='wishlist.itemTemplate'>
+    <li>
+      <label>Name</label>
+      <input type="text">
+    </li>
+  </template>
 
   <h3>Invite some people</h3>
-  <ul>
+  <ul data-target='wishlist.inviteeList'>
     <%= f.fields_for :invitees do |invitees_form| %>
       <li>
         <%= invitees_form.label :email %>
@@ -35,6 +43,16 @@
       </li>
     <% end %>
   </ul>
+  <%= button_tag 'Add someone to invite', data: { action: 'click->wishlist#addInvitee' } %>
 
-  <%= f.submit 'Create new wishlist', data: { 'disable-with': 'Creating...' } %>
+  <template data-target='wishlist.inviteeTemplate'>
+    <li>
+      <label>Email</label>
+      <input type="email">
+    </li>
+  </template>
+
+  <div>
+    <%= f.submit 'Create new wishlist', data: { 'disable-with': 'Creating...' } %>
+  </div>
 <% end %>
