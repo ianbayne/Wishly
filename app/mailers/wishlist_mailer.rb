@@ -1,5 +1,8 @@
 class WishlistMailer < ApplicationMailer
-  before_action { @wishlist, @recipient = params[:wishlist], params[:recipient] }
+  before_action do
+    @wishlist  = Wishlist.find(params[:wishlist_id])
+    @recipient = User.find(params[:recipient_id])
+  end
 
   default to: -> { @recipient.email }
 

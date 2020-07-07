@@ -61,12 +61,12 @@ private
     owner    = @wishlist.owner
     invitees = @wishlist.invitees
 
-    WishlistMailer.with(wishlist: @wishlist, recipient: owner)
-                  .new_wishlist_created.deliver_now
+    WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: owner.id)
+                  .new_wishlist_created.deliver_later
 
     invitees.each do |invitee|
-      WishlistMailer.with(wishlist: @wishlist, recipient: invitee)
-                    .invited_to_wishlist.deliver_now
+      WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: invitee.id)
+                    .invited_to_wishlist.deliver_later
     end
   end
 end
