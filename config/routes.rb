@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'wishlists#new'
+  root to: 'pages#home'
 
   resources :wishlists, only: [:new, :create, :show] do
     post 'wishlist_items/:id', to: 'purchases#create', as: 'item_purchase'
