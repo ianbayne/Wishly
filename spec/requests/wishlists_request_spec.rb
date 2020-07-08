@@ -40,7 +40,27 @@ RSpec.describe 'Wishlists', type: :request do
     it 'sends emails to the wishlist owner and each invitee' do
       expect do
         post '/wishlists', params: wishlist_params
-      end.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(2).times
+      end.to(
+        enqueue_job(ActionMailer::MailDeliveryJob)
+          .exactly(2)
+          .times
+      )
+
+      wishlist_params_with_another_invitee = wishlist_params.deep_merge!(
+        wishlist: {
+          invitees_attributes: {
+            '1' => { email: 'invitee_2@example.com' }
+          }
+        }
+      )
+
+      expect do
+        post '/wishlists', params: wishlist_params_with_another_invitee
+      end.to(
+        enqueue_job(ActionMailer::MailDeliveryJob)
+          .exactly(3)
+          .times
+      )
     end
   end
 
