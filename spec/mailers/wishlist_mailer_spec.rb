@@ -2,16 +2,28 @@ require 'rails_helper'
 
 RSpec.describe WishlistMailer, type: :mailer do
   let(:owner)    { User.create(email: 'owner@example.com') }
-  let(:wishlist) { Wishlist.create(title: 'Example wishlist', owner: owner) }
-  let(:invitee)  { User.create(email: 'invitee@example.com') }
+  let(:wishlist) do
+      Wishlist.create!(
+        title: 'Example wishlist',
+        owner: owner,
+        wishlist_items: [
+          WishlistItem.new(name: 'Item 1')
+        ],
+        invitees: [
+          User.new(email: 'invitee@example.com')
+        ]
+      )
+    end
 
   let(:new_wishlist_created_mail) do
-    WishlistMailer.with(wishlist: wishlist, recipient: owner)
+    WishlistMailer.with(wishlist_id: wishlist.id, recipient_id: owner.id)
                   .new_wishlist_created
   end
   let(:invited_to_wishlist_mail) do
-    WishlistMailer.with(wishlist: wishlist, recipient: invitee)
-                  .invited_to_wishlist
+    WishlistMailer.with(
+      wishlist_id:  wishlist.id,
+      recipient_id: wishlist.invitees.first.id
+    ).invited_to_wishlist
   end
 
   describe 'new_wishlist_created' do
@@ -19,7 +31,9 @@ RSpec.describe WishlistMailer, type: :mailer do
       aggregate_failures do
         expect(new_wishlist_created_mail.subject).to eq('You created a new wishlist!')
         expect(new_wishlist_created_mail.to).to eq([owner.email])
-        expect(new_wishlist_created_mail.from).to eq(['support@wishly.com'])
+        expect(new_wishlist_created_mail.from).to(
+          eq(["wishly-support@#{ActionMailer::Base.smtp_settings[:domain]}"])
+        )
       end
     end
 
@@ -34,7 +48,7 @@ RSpec.describe WishlistMailer, type: :mailer do
 
     it 'has a unique Message-ID' do
       new_wishlist_created_mail_2 =
-        WishlistMailer.with(wishlist: wishlist, recipient: owner)
+        WishlistMailer.with(wishlist_id: wishlist.id, recipient_id: owner.id)
                       .new_wishlist_created
 
       expect(new_wishlist_created_mail.message_id).not_to(
@@ -49,21 +63,27 @@ RSpec.describe WishlistMailer, type: :mailer do
         expect(invited_to_wishlist_mail.subject).to(
           eq('Someone invited you to their wishlist!')
         )
-        expect(invited_to_wishlist_mail.to).to eq([invitee.email])
-        expect(invited_to_wishlist_mail.from).to eq(['support@wishly.com'])
+        expect(invited_to_wishlist_mail.to).to(
+          eq([wishlist.invitees.first.email])
+        )
+        expect(invited_to_wishlist_mail.from).to(
+          eq(["wishly-support@#{ActionMailer::Base.smtp_settings[:domain]}"])
+        )
       end
     end
 
     it 'renders the body' do
       expect(invited_to_wishlist_mail.body.encoded).to include(
-        "#{wishlist.owner.email} has invited you to their wishlist."
+        "#{wishlist.owner.email} has invited you to their wishlist, " \
+        "\"#{wishlist.title}.\""
       )
     end
 
     it 'has a unique Message-ID' do
-      invited_to_wishlist_mail_2 =
-        WishlistMailer.with(wishlist: wishlist, recipient: invitee)
-                      .invited_to_wishlist
+      invited_to_wishlist_mail_2 = WishlistMailer.with(
+                                     wishlist_id:  wishlist.id,
+                                     recipient_id: wishlist.invitees.first.id
+                                   ).invited_to_wishlist
 
       expect(invited_to_wishlist_mail.message_id).not_to(
         eq(invited_to_wishlist_mail_2.message_id)
