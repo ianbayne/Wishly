@@ -12,9 +12,7 @@
   <body>
     <nav style="text-align: right;"><%= User.find(params[:user_id]).email if params[:user_id]%></nav>
     <div id="flash-container">
-      <% flash.each do |key, value| %>
-        <%= content_tag 'div', value, class: "#{key}" %>
-      <% end %>
+      <%= render "shared/flash_container" if flash %>
     </div>
 
     <%= yield %>

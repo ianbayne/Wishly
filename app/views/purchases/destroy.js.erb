@@ -1,4 +1,4 @@
-<%= render 'shared/flash' %>
+<%= render 'shared/flash' if flash %>
 
 var wishlistItem = document.getElementById('wishlist-item-<%= params[:id] %>');
 
