@@ -1,38 +1,40 @@
 <div class="flash-container"></div>
 
-<h1><%= @wishlist.title %></h1>
-<table>
-  <% @wishlist.wishlist_items.includes(purchase: :user).each do |wishlist_item| %>
-    <% if @wishlist.owner == @user %>
-      <tr id="wishlist-item-<%= wishlist_item.id %>">
-        <td>
-          <li><%= wishlist_item.name %></li>
-        </td>
-      </tr>
-    <% else %>
-      <tr id="wishlist-item-<%= wishlist_item.id %>">
-        <% if wishlist_item.purchased? %>
-          <td class="purchased-item">
-            <%= render partial: 'purchased_item', locals: { wishlist_item: wishlist_item } %>
-          </td>
-          <td class="purchase-button">
-            <%= render partial: 'cancel_purchase', locals: { wishlist: @wishlist, wishlist_item: wishlist_item, user_id: @user.id } if wishlist_item.purchase.user == @user %>
-          </td>
+<div class="section">
+  <h1><%= @wishlist.title %></h1>
+  <table>
+    <% @wishlist.wishlist_items.includes(purchase: :user).each do |wishlist_item| %>
+      <% if @wishlist.owner == @user %>
+        <tr id="wishlist-item-<%= wishlist_item.id %>">
           <td>
-            <% if wishlist_item.purchase.user != @user %>
-              Purchased by <%= wishlist_item.purchase.user.email %> on <%= wishlist_item.purchase.created_at.strftime("%A, %B%e") %>
-            <% end %>
+            <li><%= wishlist_item.name %></li>
           </td>
-        <% else %>
-          <td class="purchased-item">
-            <%= render partial: 'unpurchased_item', locals: { wishlist_item: wishlist_item } %>
-          </td>
-          <td class="purchase-button">
-            <%= render partial: 'purchase', locals: { wishlist: @wishlist, wishlist_item: wishlist_item, user_id: @user.id } %>
-          </td>
-          <td></td>
-        <% end %>
-      </tr>
+        </tr>
+      <% else %>
+        <tr id="wishlist-item-<%= wishlist_item.id %>">
+          <% if wishlist_item.purchased? %>
+            <td class="purchased-item">
+              <%= render partial: 'purchased_item', locals: { wishlist_item: wishlist_item } %>
+            </td>
+            <td class="purchase-button">
+              <%= render partial: 'cancel_purchase', locals: { wishlist: @wishlist, wishlist_item: wishlist_item, user_id: @user.id } if wishlist_item.purchase.user == @user %>
+            </td>
+            <td>
+              <% if wishlist_item.purchase.user != @user %>
+                Purchased by <%= wishlist_item.purchase.user.email %> on <%= wishlist_item.purchase.created_at.strftime("%A, %B%e") %>
+              <% end %>
+            </td>
+          <% else %>
+            <td class="purchased-item">
+              <%= render partial: 'unpurchased_item', locals: { wishlist_item: wishlist_item } %>
+            </td>
+            <td class="purchase-button">
+              <%= render partial: 'purchase', locals: { wishlist: @wishlist, wishlist_item: wishlist_item, user_id: @user.id } %>
+            </td>
+            <td></td>
+          <% end %>
+        </tr>
+      <% end %>
     <% end %>
-  <% end %>
-</ul>
+  </table>
+</div>

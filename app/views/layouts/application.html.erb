@@ -12,11 +12,27 @@
   </head>
 
   <body>
-    <nav style="text-align: right;"><%= User.find(params[:user_id]).email if params[:user_id]%></nav>
+    <nav>
+      <div>
+        <%= link_to 'Wishly', root_path %>
+      </div>
+      <div class="user-name">
+        <%= User.find(params[:user_id]).email if params[:user_id]%>
+      </div>
+    </nav>
+
     <div id="flash-container">
       <%= render "shared/flash_container" if flash %>
     </div>
 
-    <%= yield %>
+    <div class="content">
+      <%= yield %>
+    </div>
+
+    <footer>
+      <p>
+        © 2020 Wishly
+      </p>
+    </footer>
   </body>
 </html>
