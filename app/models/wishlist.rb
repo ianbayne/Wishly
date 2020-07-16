@@ -26,8 +26,9 @@ class Wishlist < ApplicationRecord
 private
 
   def ensure_all_email_addresses_are_unique
-    email_addresses = self.participants.map(&:email).map(&:downcase)
-    add_error_if_not_unique(email_addresses)
+    email_addresses     = self.participants.map(&:email)
+    downcased_addresses = email_addresses.map(&:downcase)
+    add_error_if_not_unique(downcased_addresses)
   end
 
   def ensure_gmail_addresses_are_unique
@@ -47,12 +48,8 @@ private
   end
 
   def find_gmail_users
-    gmail_addresses = []
-    gmail_addresses << self.owner.email if self.owner.email.include?('gmail.com')
-    self.invitees.each do |invitee|
-      gmail_addresses << invitee.email if invitee.email.include?('gmail.com')
-    end
-    gmail_addresses
+    email_addresses = self.participants.map(&:email)
+    email_addresses.filter { |address| address.include?('gmail.com') }
   end
 
   def strip_addresses(addresses)
