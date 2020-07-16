@@ -13,11 +13,22 @@ class Wishlist < ApplicationRecord
   validates :wishlist_items,
             :invitees,
             length: { minimum: 1 }
+  validate  :ensure_all_email_addresses_are_unique
   validate  :ensure_gmail_addresses_are_unique
 
   EMAIL_RE = Regexp.new(/(?<before_plus>.+)\+(?<after_plus>.+)@(?<domain>.+)/)
 
+  def participants
+    participants = [self.owner] + self.invitees
+    participants.compact
+  end
+
 private
+
+  def ensure_all_email_addresses_are_unique
+    email_addresses = self.participants.map(&:email).map(&:downcase)
+    add_error_if_not_unique(email_addresses)
+  end
 
   def ensure_gmail_addresses_are_unique
     return if self.owner.nil? || self.owner.email.blank?
@@ -26,7 +37,11 @@ private
     gmail_addresses.compact
     stripped_addresses = strip_addresses(gmail_addresses)
 
-    if stripped_addresses.length != stripped_addresses.uniq.length
+    add_error_if_not_unique(stripped_addresses)
+  end
+
+  def add_error_if_not_unique(addresses)
+    if addresses.length != addresses.uniq.length
       errors.add(:wishlist, 'email addresses must be unique.')
     end
   end

@@ -52,6 +52,21 @@ RSpec.describe Wishlist, type: :model do
     expect(wishlist).not_to be_valid
   end
 
+  it 'has participants with case insensitively unique email addresses' do
+    wishlist.title    = 'New wishlist'
+    wishlist.owner    = User.new(email: 'EXAMPLE@email.com')
+    wishlist.invitees << User.new(email: 'example@email.com')
+    wishlist.wishlist_items << item
+    wishlist.save
+
+    aggregate_failures do
+      expect(wishlist).not_to be_valid
+      expect(wishlist.errors.full_messages).to(
+        include 'Wishlist email addresses must be unique.'
+      )
+    end
+  end
+
   context 'when two participants have emails with periods or plus signs' do
     context "when they're gmail addresses" do
       let(:gmail_user_without_period) do
