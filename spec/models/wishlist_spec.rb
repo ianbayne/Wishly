@@ -25,7 +25,7 @@ RSpec.describe Wishlist, type: :model do
     expect(wishlist).not_to be_valid
   end
 
-  it 'is invalid without a user' do
+  it 'is invalid without an owner' do
     wishlist.title = 'New wishlist'
     wishlist.wishlist_items << item
     wishlist.invitees << invitee
