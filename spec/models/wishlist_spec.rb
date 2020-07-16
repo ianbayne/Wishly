@@ -60,12 +60,36 @@ RSpec.describe Wishlist, type: :model do
       let(:gmail_user_with_period) do
         User.new(email: 'example.name@gmail.com')
       end
+      let(:gmail_user_without_plus_sign) do
+        User.new(email: 'example@gmail.com')
+      end
+      let(:gmail_user_with_plus_sign) do
+        User.new(email: 'example+name@gmail.com')
+      end
 
       it 'cannot have addresses that would be duplicates without periods' do
         wishlist = Wishlist.new(
           title:          'Example wishlist',
           owner:          gmail_user_without_period,
           invitees:       [gmail_user_with_period],
+          wishlist_items: [item]
+        )
+        wishlist.save
+
+        aggregate_failures do
+          expect(wishlist).not_to be_valid
+          expect(wishlist.errors.full_messages).to(
+            include 'Wishlist email addresses must be unique.'
+          )
+        end
+      end
+
+      it 'cannot have addresses that would be duplicates if the plus sign ' \
+         'and everything after were removed' do
+        wishlist = Wishlist.new(
+          title:          'Example wishlist',
+          owner:          gmail_user_without_plus_sign,
+          invitees:       [gmail_user_with_plus_sign],
           wishlist_items: [item]
         )
         wishlist.save
@@ -86,12 +110,31 @@ RSpec.describe Wishlist, type: :model do
       let(:non_gmail_user_with_period) do
         User.new(email: 'example.name@hotmail.com')
       end
+      let(:non_gmail_user_without_plus_sign) do
+        User.new(email: 'example@hotmail.com')
+      end
+      let(:non_gmail_user_with_plus_sign) do
+        User.new(email: 'example+name@hotmail.com')
+      end
 
       it 'can have addresses that would be duplicates without periods' do
         wishlist = Wishlist.new(
           title:          'Example wishlist',
           owner:          non_gmail_user_without_period,
           invitees:       [non_gmail_user_with_period],
+          wishlist_items: [item]
+        )
+        wishlist.save
+
+        expect(wishlist).to be_valid
+      end
+
+      it 'can have addresses that would be duplicates if the plus sign ' \
+         'and everything after were removed' do
+        wishlist = Wishlist.new(
+          title:          'Example wishlist',
+          owner:          non_gmail_user_without_plus_sign,
+          invitees:       [non_gmail_user_with_plus_sign],
           wishlist_items: [item]
         )
         wishlist.save
