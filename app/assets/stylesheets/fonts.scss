@@ -1,0 +1,23 @@
+// Responsive font style mixins
+@mixin font-size-h1-responsive {
+  font-size: font-size(h1);
+  @media (max-width: break-point(lg-max)) {
+    font-size: font-size(h2);
+  }
+  @media (max-width: break-point(md-max)) {
+    font-size: font-size(h3);
+  }
+}
+@mixin font-size-p-responsive {
+  font-size: font-size(p);
+  @media (max-width: break-point(md-max)) {
+    font-size: font-size(p-small);
+  }
+}
+
+h1 {
+  @include font-size-h1-responsive;
+}
+p {
+  @include font-size-p-responsive;
+}

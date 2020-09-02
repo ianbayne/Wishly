@@ -1,0 +1,47 @@
+// Font sizs
+$font-sizes: (
+  h1: (
+    42 / 16
+  ) * 1em,
+  h2: (
+    32 / 16
+  ) * 1em,
+  h3: (
+    24 / 16
+  ) * 1em,
+  p: (
+    16 / 16
+  ) * 1em,
+  p-small: (
+    14 / 16
+  ) * 1em
+);
+@function font-size($font-size) {
+  @return map-get($font-sizes, $font-size);
+}
+// Generate static font size classes from font-size variables
+@mixin font-sizes {
+  @each $name, $em in $font-sizes {
+    &-#{$name} {
+      font-size: $em;
+    }
+  }
+}
+
+
+// Breakpoints
+$break-points: (
+  xl-min: 1501px,
+  xl-max: 1500px,
+  lg-min: 991px,
+  lg-max: 990px,
+  md-min: 768px,
+  md-max: 767px,
+  sm-min: 544px,
+  sm-max: 543px,
+  xs-min: 361px,
+  xs-max: 360px
+);
+@function break-point($break-point) {
+  @return map-get($break-points, $break-point);
+}
