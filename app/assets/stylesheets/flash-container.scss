@@ -1,0 +1,15 @@
+#flash-container {
+  margin-bottom: 50px;
+  color: #F9F8FF;
+  .alert, .notice {
+    padding-left: 10vw;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  .alert {
+    background-color: #EA616C;
+  }
+  .notice {
+    background-color: #8EF192;
+  }
+}

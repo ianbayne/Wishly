@@ -1,0 +1,18 @@
+.button {
+  display: block;
+  width: 125px;
+  margin: 0 auto;
+  text-align: center;
+  font-weight: 400;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: white;
+  color: #2A70EC;
+  text-decoration: none;
+  border: 1px solid #2A70EC;
+  &:hover {
+    background-color: #2A70EC;
+    color: white;
+    // font-weight: normal;
+  }
+}
