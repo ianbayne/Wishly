@@ -6,9 +6,9 @@
   padding: 10px 20px;
   border-radius: 10px;
   background-color: white;
-  color: #2A70EC;
+  color: color(primary);
   text-decoration: none;
-  border: 1px solid #2A70EC;
+  border: 1px solid color(primary);
   &.link {
     width: 125px;
   }
@@ -16,7 +16,7 @@
     cursor: pointer;
   }
   &:hover {
-    background-color: #2A70EC;
+    background-color: color(primary);
     color: white;
     // font-weight: normal;
   }

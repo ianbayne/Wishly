@@ -17,7 +17,7 @@ body {
   margin-right: auto;
   max-width: 600px;
   h1, p {
-    color: #333;
+    color: color(grey-dark);
   }
   h1 {
     font-family: serif;
@@ -38,7 +38,7 @@ form {
 
 .section {
   padding: 60px 60px 65px 60px;
-  border: 1px solid #EBECEB;
+  border: 1px solid color(grey-light);
   border-radius: 15px;
   margin-bottom: 50px;
   @media (max-width: break-point(md-max)) {

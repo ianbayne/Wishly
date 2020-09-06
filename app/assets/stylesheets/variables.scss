@@ -73,3 +73,15 @@ $line-heights: (
 .line-height {
   @include line-height;
 }
+
+
+// Colors
+$colors: (
+  primary: #2A70EC,
+  grey-dark: #333,
+  grey: #bbb,
+  grey-light: #EBECEB
+);
+@function color($color) {
+  @return map-get($colors, $color);
+}
