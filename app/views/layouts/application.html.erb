@@ -6,6 +6,7 @@
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Wishly: Easily create, manage, and send wishlists to your friends and family">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -22,7 +23,7 @@
     </nav>
 
     <div id="flash-container">
-      <%= render "shared/flash_container" if flash %>
+      <%= render "shared/flash_container" if flash.any? %>
     </div>
 
     <div class="content">
