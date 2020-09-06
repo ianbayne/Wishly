@@ -17,6 +17,29 @@ h1 {
 }
 p,
 .font-size-p-responsive,
-label {
+label,
+a {
   @include font-size-p-responsive;
+}
+
+
+// Default line heights
+a,
+button {
+  line-height: line-height(1);
+}
+h1 {
+  line-height: line-height(12);
+}
+h2 {
+  line-height: line-height(12);
+}
+h3 {
+  line-height: line-height(12);
+}
+p {
+  line-height: line-height(18);
+  @media (max-width: break-point(md-max)) {
+    line-height: line-height(16);
+  }
 }

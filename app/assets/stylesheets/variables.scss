@@ -45,3 +45,31 @@ $break-points: (
 @function break-point($break-point) {
   @return map-get($break-points, $break-point);
 }
+
+
+// Line heights
+$line-heights: (
+  1: 1,
+  12: 1.2,
+  13: 1.3,
+  14: 1.4,
+  15: 1.5,
+  16: 1.6,
+  18: 1.8,
+  2: 2
+);
+@function line-height($line-height) {
+  @return map-get($line-heights, $line-height);
+}
+
+// Generate line-height classes
+@mixin line-height {
+  @each $name, $line-height in $line-heights {
+    &-#{$name} {
+      line-height: $line-height;
+    }
+  }
+}
+.line-height {
+  @include line-height;
+}
