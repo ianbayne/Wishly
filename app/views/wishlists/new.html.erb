@@ -4,50 +4,54 @@
   <h1>Create your wishlist</h1>
 
   <%= form_with model: @wishlist, data: { controller: 'wishlist' } do |f| %>
-    <div>
-      <%= f.label :title, 'Wishlist Title:' %>
-      <%= f.text_field :title %>
+    <div class="wishlist-content">
+      <div>
+        <%= f.label :title, 'Wishlist Title:' %>
+        <%= f.text_field :title %>
+      </div>
+
+      <div>
+        <%= f.fields_for :owner do |owner_form| %>
+          <%= owner_form.label :email, 'Your email:' %>
+          <%= owner_form.email_field :email %>
+        <% end %>
+      </div>
+
+      <label>Wishlist items:</label>
+      <ul data-target='wishlist.itemList'>
+        <%= f.fields_for :wishlist_items do |wishlist_items_form| %>
+          <li>
+            <%= wishlist_items_form.text_field :name, placeholder: 'New bike' %>
+          </li>
+        <% end %>
+      </ul>
+      <%= button_tag 'Add item', data: { action: 'click->wishlist#addItem' } %>
+
+      <template data-target='wishlist.itemTemplate'>
+        <li>
+          <input type='text'>
+        </li>
+      </template>
     </div>
 
-    <div>
-      <%= f.fields_for :owner do |owner_form| %>
-        <%= owner_form.label :email, 'Your email:' %>
-        <%= owner_form.email_field :email %>
-      <% end %>
+    <div class="invitees-content">
+      <h3>Invite some people</h3>
+      <ul data-target='wishlist.inviteeList'>
+        <%= f.fields_for :invitees do |invitees_form| %>
+          <label>Email:</label>
+          <li>
+            <%= invitees_form.email_field :email, placeholder: 'example_email@gmail.com' %>
+          </li>
+        <% end %>
+      </ul>
+      <%= button_tag 'Add someone to invite', data: { action: 'click->wishlist#addInvitee' } %>
+
+      <template data-target='wishlist.inviteeTemplate'>
+        <li>
+          <input type='email'>
+        </li>
+      </template>
     </div>
-
-    <label>Wishlist items:</label>
-    <ul data-target='wishlist.itemList'>
-      <%= f.fields_for :wishlist_items do |wishlist_items_form| %>
-        <li>
-          <%= wishlist_items_form.text_field :name, placeholder: 'New bike' %>
-        </li>
-      <% end %>
-    </ul>
-    <%= button_tag 'Add item', data: { action: 'click->wishlist#addItem' } %>
-
-    <template data-target='wishlist.itemTemplate'>
-      <li>
-        <input type='text'>
-      </li>
-    </template>
-
-    <h3>Invite some people</h3>
-    <ul data-target='wishlist.inviteeList'>
-      <%= f.fields_for :invitees do |invitees_form| %>
-        <label>Email:</label>
-        <li>
-          <%= invitees_form.email_field :email, placeholder: 'example_email@gmail.com' %>
-        </li>
-      <% end %>
-    </ul>
-    <%= button_tag 'Add someone to invite', data: { action: 'click->wishlist#addInvitee' } %>
-
-    <template data-target='wishlist.inviteeTemplate'>
-      <li>
-        <input type='email'>
-      </li>
-    </template>
 
     <div>
       <%= f.submit 'Create new wishlist', data: { 'disable-with': 'Creating...' }, class: 'button font-size-p-responsive submit-button' %>
