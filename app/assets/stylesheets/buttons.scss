@@ -1,6 +1,5 @@
 .button {
   display: block;
-  width: 125px;
   margin: 0 auto;
   text-align: center;
   font-weight: 400;
@@ -10,6 +9,12 @@
   color: #2A70EC;
   text-decoration: none;
   border: 1px solid #2A70EC;
+  &.link {
+    width: 125px;
+  }
+  &.submit-button {
+    cursor: pointer;
+  }
   &:hover {
     background-color: #2A70EC;
     color: white;
