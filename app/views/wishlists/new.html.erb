@@ -25,7 +25,7 @@
           </li>
         <% end %>
       </ul>
-      <%= button_tag 'Add item', data: { action: 'click->wishlist#addItem' } %>
+      <%= button_tag '+', data: { action: 'click->wishlist#addItem' }, class: 'font-size-p-responsive button add-button' %>
 
       <template data-target='wishlist.itemTemplate'>
         <li>
@@ -44,7 +44,7 @@
           </li>
         <% end %>
       </ul>
-      <%= button_tag 'Add someone to invite', data: { action: 'click->wishlist#addInvitee' } %>
+      <%= button_tag '+', data: { action: 'click->wishlist#addInvitee' }, class: 'font-size-p-responsive button add-button' %>
 
       <template data-target='wishlist.inviteeTemplate'>
         <li>
@@ -53,8 +53,6 @@
       </template>
     </div>
 
-    <div>
-      <%= f.submit 'Create new wishlist', data: { 'disable-with': 'Creating...' }, class: 'button font-size-p-responsive submit-button' %>
-    </div>
+    <%= f.submit 'Create new wishlist', data: { 'disable-with': 'Creating...' }, class: 'button font-size-p-responsive submit-button' %>
   <% end %>
 </div>
