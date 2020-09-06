@@ -41,6 +41,9 @@ form {
   border: 1px solid #EBECEB;
   border-radius: 15px;
   margin-bottom: 50px;
+  @media (max-width: break-point(md-max)) {
+    margin-bottom: 0;
+  }
   h1 {
     margin-bottom: 20px;
   }
