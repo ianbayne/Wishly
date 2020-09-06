@@ -34,6 +34,18 @@ form {
   ul {
     list-style-type: none;
   }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid color(grey);
+    font-size: 1em;
+  }
 }
 
 .section {

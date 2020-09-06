@@ -5,13 +5,13 @@
 
   <%= form_with model: @wishlist, data: { controller: 'wishlist' } do |f| %>
     <div>
-      <%= f.label :title, 'Wishlist Title:' %><br>
+      <%= f.label :title, 'Wishlist Title:' %>
       <%= f.text_field :title %>
     </div>
 
     <div>
       <%= f.fields_for :owner do |owner_form| %>
-        <%= owner_form.label :email, 'Your email:' %><br>
+        <%= owner_form.label :email, 'Your email:' %>
         <%= owner_form.email_field :email %>
       <% end %>
     </div>
