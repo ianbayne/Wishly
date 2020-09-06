@@ -14,9 +14,6 @@ export default class extends Controller {
     const itemId = `wishlist_wishlist_items_attributes_${itemNumber}_name`
     const itemName = `wishlist[wishlist_items_attributes][${itemNumber}][name]`
 
-    const itemLabel = item.querySelector('label')
-    itemLabel.setAttribute('for', itemId);
-
     const itemInput = item.querySelector('input')
     itemInput.setAttribute('id', itemId);
     itemInput.setAttribute('name', itemName);
@@ -34,10 +31,6 @@ export default class extends Controller {
     const inviteeNumber = inviteeList.children.length;
     const inviteeId = `wishlist_invitees_attributes_${inviteeNumber}_email`;
     const inviteeName = `wishlist[invitees_attributes][${inviteeNumber}][email]`;
-
-    const inviteeLabel = invitee.querySelector('label');
-    inviteeLabel.setAttribute('for', inviteeId);
-    console.log(inviteeLabel)
 
     const inviteeInput = invitee.querySelector('input');
     inviteeInput.setAttribute('id', inviteeId);
