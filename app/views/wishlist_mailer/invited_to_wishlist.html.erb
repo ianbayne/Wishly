@@ -1,8 +1,15 @@
 <p>Hi there,</p>
-<p>
-  <%= @wishlist.owner.email %> has invited you to their wishlist, "<%= @wishlist.title %>."
-</p>
-<p>
-  If you know this individual, you can click <%= link_to 'here', wishlist_url(@wishlist, user_id: @recipient.id) %> to visit their wishlist and register your purchases so that other invitees can see what has and hasn't been purchased yet.
-</p>
+
+<p>Welcome to Wishly, the easy way to create, manage, and send wishlists to your friends and family.</p>
+
+<p>This mail is to inform you that <%= @wishlist.owner.email %> has invited you to their wishlist, "<%= @wishlist.title %>."</p>
+
+<p>If you know this individual, you can click the link below to visit their wishlist, see what they're hoping to receive, and indicate what you'll be purchasing for them. That way everyone who's been invited to <%= @wishlist.owner.email %>'s wishlist can see what has and hasn't been purchased yet and there won't be any double purchases.</p>
+
+<%= link_to 'Visit wishlist', wishlist_url(@wishlist, user_id: @recipient.id) %>
+
+<p>Make sure to save this email as the link above is your access to their wishlist.</p>
+
+<p>Happy wishlisting!</p>
+
 <p>Your friends at Wishly</p>
