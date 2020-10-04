@@ -105,4 +105,12 @@ RSpec.describe 'Wishlists', type: :request do
       expect(response).to redirect_to(root_url)
     end
   end
+
+  describe 'GET /edit' do
+    xit 'navigates to the edit screen'
+  end
+
+  describe 'PUT /update' do
+    xit 'updates the wishlist'
+  end
 end

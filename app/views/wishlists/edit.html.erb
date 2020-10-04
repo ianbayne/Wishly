@@ -1,0 +1,59 @@
+<div id="errors-container"></div>
+
+<div class="section">
+  <h1>Create your wishlist</h1>
+
+  <%= form_with model: @wishlist, data: { controller: 'wishlist' } do |f| %>
+    <%= hidden_field_tag "user_id", "#{@user.id}" %>
+    <div class="wishlist-content">
+      <div>
+        <%= f.label :title, 'Wishlist Title:' %>
+        <%= f.text_field :title, disabled: true %>
+      </div>
+
+      <div>
+        <%= f.fields_for :owner do |owner_form| %>
+          <%= owner_form.label :email, 'Your email:' %>
+          <%= owner_form.email_field :email, disabled: true %>
+        <% end %>
+      </div>
+
+      <label>Wishlist items:</label>
+      <ul data-target='wishlist.itemList'>
+        <%= f.fields_for :wishlist_items do |wishlist_items_form| %>
+          <li>
+            <%= wishlist_items_form.text_field :name, placeholder: 'New bike' %>
+          </li>
+        <% end %>
+      </ul>
+      <%= button_tag '+', data: { action: 'click->wishlist#addItem' }, class: 'font-size-p-responsive button add-button' %>
+
+      <template data-target='wishlist.itemTemplate'>
+        <li>
+          <input type='text'>
+        </li>
+      </template>
+    </div>
+
+    <div class="invitees-content">
+      <h3>Invite some people</h3>
+      <ul data-target='wishlist.inviteeList'>
+        <%= f.fields_for :invitees do |invitees_form| %>
+          <label>Email:</label>
+          <li>
+            <%= invitees_form.email_field :email, placeholder: 'example_email@gmail.com' %>
+          </li>
+        <% end %>
+      </ul>
+      <%= button_tag '+', data: { action: 'click->wishlist#addInvitee' }, class: 'font-size-p-responsive button add-button' %>
+
+      <template data-target='wishlist.inviteeTemplate'>
+        <li>
+          <input type='email'>
+        </li>
+      </template>
+    </div>
+
+    <%= f.submit 'Update wishlist', data: { 'disable-with': 'Updating...' }, class: 'button font-size-p-responsive submit-button' %>
+  <% end %>
+</div>
