@@ -35,7 +35,20 @@ class WishlistsController < ApplicationController
   end
 
   def update
+    original_items_count = @wishlist.wishlist_items.count
+    original_invitees = @wishlist.invitees.to_a
+
     if @wishlist.update(wishlist_params)
+      if original_items_count != @wishlist.wishlist_items.count
+        send_wishlist_updated_emails
+      end
+
+      new_invitees = @wishlist.invitees.to_a.filter do |invitee|
+        !original_invitees.include? invitee
+      end
+
+      send_emails(owner: nil, invitees: new_invitees)
+
       redirect_to(
         wishlist_path(@wishlist, user_id: @wishlist.owner.id),
         notice: 'Wishlist updated!'
@@ -64,16 +77,17 @@ private
     )
   end
 
-  def send_emails
-    owner    = @wishlist.owner
-    invitees = @wishlist.invitees
+  def send_emails(owner: @wishlist.owner, invitees: @wishlist.invitees)
+    if owner
+      WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: owner.id)
+                    .new_wishlist_created.deliver_later
+    end
 
-    WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: owner.id)
-                  .new_wishlist_created.deliver_later
-
-    invitees.each do |invitee|
-      WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: invitee.id)
-                    .invited_to_wishlist.deliver_later
+    if invitees
+      invitees.each do |invitee|
+        WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: invitee.id)
+                      .invited_to_wishlist.deliver_later
+      end
     end
   end
 
@@ -87,5 +101,9 @@ private
                                     'does not exist or you do not have ' \
                                     'access to it.'
     end
+  end
+
+  def send_wishlist_updated_emails
+    # TODO
   end
 end
