@@ -1,0 +1,6 @@
+<%= render 'shared/flash' if flash %>
+
+<% if @wishlist.errors.any? %>
+  document.getElementById('errors-container').innerHTML = "<ul><% @wishlist.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul>";
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+<% end %>

@@ -20,6 +20,7 @@ class WishlistsController < ApplicationController
       respond_to do |format|
         failure_message = 'Your wishlist could not be created...'
         format.js { flash.now[:alert] = failure_message }
+        # TODO: Fix this (format.html doesn't work)
         format.html do
           flash.now[:alert] = failure_message
           render :new
@@ -53,6 +54,16 @@ class WishlistsController < ApplicationController
         wishlist_path(@wishlist, user_id: @wishlist.owner.id),
         notice: 'Wishlist updated!'
       )
+    else
+      respond_to do |format|
+        failure_message = 'Your wishlist could not be updated...'
+        format.js { flash.now[:alert] = failure_message }
+        # TODO: Fix this (format.html doesn't work)
+        format.html do
+          flash.now[:alert] = failure_message
+          render :new
+        end
+      end
     end
   end
 
