@@ -1,7 +1,7 @@
 <div id="errors-container"></div>
 
 <div class="section">
-  <h1>Create your wishlist</h1>
+  <h1>Edit your wishlist</h1>
 
   <%= form_with model: @wishlist, data: { controller: 'wishlist' } do |f| %>
     <%= hidden_field_tag "user_id", "#{@user.id}" %>
@@ -22,7 +22,7 @@
       <ul data-target='wishlist.itemList'>
         <%= f.fields_for :wishlist_items do |wishlist_items_form| %>
           <li>
-            <%= wishlist_items_form.text_field :name, placeholder: 'New bike' %>
+            <%= wishlist_items_form.text_field :name, disabled: true %>
           </li>
         <% end %>
       </ul>
@@ -37,11 +37,11 @@
 
     <div class="invitees-content">
       <h3>Invite some people</h3>
+      <label>Emails:</label>
       <ul data-target='wishlist.inviteeList'>
         <%= f.fields_for :invitees do |invitees_form| %>
-          <label>Email:</label>
           <li>
-            <%= invitees_form.email_field :email, placeholder: 'example_email@gmail.com' %>
+            <%= invitees_form.email_field :email, disabled: true %>
           </li>
         <% end %>
       </ul>
@@ -49,7 +49,7 @@
 
       <template data-target='wishlist.inviteeTemplate'>
         <li>
-          <input type='email'>
+          <input type='email' placeholder='my_friend@their_email.com'>
         </li>
       </template>
     </div>

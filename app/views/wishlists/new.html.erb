@@ -7,13 +7,13 @@
     <div class="wishlist-content">
       <div>
         <%= f.label :title, 'Wishlist Title:' %>
-        <%= f.text_field :title %>
+        <%= f.text_field :title, placeholder: 'My birthday wishlist' %>
       </div>
 
       <div>
         <%= f.fields_for :owner do |owner_form| %>
           <%= owner_form.label :email, 'Your email:' %>
-          <%= owner_form.email_field :email %>
+          <%= owner_form.email_field :email, placeholder: 'me@my_email.com' %>
         <% end %>
       </div>
 
@@ -40,7 +40,7 @@
         <%= f.fields_for :invitees do |invitees_form| %>
           <label>Email:</label>
           <li>
-            <%= invitees_form.email_field :email, placeholder: 'example_email@gmail.com' %>
+            <%= invitees_form.email_field :email, placeholder: 'my_friend@their_email.com' %>
           </li>
         <% end %>
       </ul>
