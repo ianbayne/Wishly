@@ -10,9 +10,9 @@ class Wishlist < ApplicationRecord
                                 reject_if: :all_blank
 
   validates :title, presence: true
-  validates :wishlist_items,
-            :invitees,
-            length: { minimum: 1 }
+
+  validate  :at_least_one_wishlist_item
+  validate  :at_least_one_invitee
   validate  :ensure_all_email_addresses_are_unique
   validate  :ensure_gmail_addresses_are_unique
 
@@ -70,4 +70,17 @@ private
     matches = address.match(EMAIL_RE)
     address = "#{matches[:before_plus]}@#{matches[:domain]}"
   end
+
+  def at_least_one_wishlist_item
+    return if wishlist_items.size > 0
+
+    errors[:base] << 'You must have at least one item in your wishlist'
+  end
+
+    def at_least_one_invitee
+    return if invitees.size > 0
+
+    errors[:base] << 'You must invite at least one person to your wishlist'
+  end
+
 end
