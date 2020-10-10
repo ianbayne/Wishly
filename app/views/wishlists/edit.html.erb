@@ -21,15 +21,17 @@
       <label>Wishlist items:</label>
       <ul data-target='wishlist.itemList'>
         <%= f.fields_for :wishlist_items do |wishlist_items_form| %>
-          <li>
+          <li style='display: flex'>
             <%= wishlist_items_form.text_field :name, disabled: true %>
+            <%= wishlist_items_form.text_field :url, disabled: true %>
           </li>
         <% end %>
       </ul>
       <%= button_tag '+', data: { action: 'click->wishlist#addItem' }, class: 'font-size-p-responsive button add-button' %>
 
       <template data-target='wishlist.itemTemplate'>
-        <li>
+        <li style='display: flex'>
+          <input type='text'>
           <input type='text'>
         </li>
       </template>

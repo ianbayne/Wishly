@@ -79,7 +79,8 @@ private
       ],
       wishlist_items_attributes: [
         :id,
-        :name
+        :name,
+        :url
       ],
       invitees_attributes: [
         :id,

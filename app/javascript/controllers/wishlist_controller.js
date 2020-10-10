@@ -12,14 +12,22 @@ export default class extends Controller {
     const item = itemTemplate.content.cloneNode(true);
 
     const itemNumber = itemList.children.length;
-    const itemId = `wishlist_wishlist_items_attributes_${itemNumber}_name`
-    const itemName = `wishlist[wishlist_items_attributes][${itemNumber}][name]`
+    const itemNameInputId = `wishlist_wishlist_items_attributes_${itemNumber}_name`
+    const itemNameInputName = `wishlist[wishlist_items_attributes][${itemNumber}][name]`
+    const itemUrlInputId = `wishlist_wishlist_items_attributes_${itemNumber}_url`
+    const itemUrlInputName = `wishlist[wishlist_items_attributes][${itemNumber}][url]`
     const randomWords = faker.random.words();
+    const randomUrl = faker.internet.url()
 
-    const itemInput = item.querySelector('input')
-    itemInput.setAttribute('id', itemId);
-    itemInput.setAttribute('name', itemName);
-    itemInput.setAttribute('placeholder', `New ${randomWords.toLowerCase()}`);
+    const nameInput = item.querySelectorAll('input')[0]
+    nameInput.setAttribute('id', itemNameInputId);
+    nameInput.setAttribute('name', itemNameInputName);
+    nameInput.setAttribute('placeholder', `New ${randomWords.toLowerCase()}`);
+
+    const urlInput = item.querySelectorAll('input')[1]
+    urlInput.setAttribute('id', itemUrlInputId);
+    urlInput.setAttribute('name', itemUrlInputName);
+    urlInput.setAttribute('placeholder', randomUrl);
 
     itemList.appendChild(item);
   }
