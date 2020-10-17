@@ -13,4 +13,8 @@ class WishlistMailer < ApplicationMailer
   def invited_to_wishlist
     mail subject: 'Someone invited you to their wishlist!'
   end
+
+  def wishlist_updated
+    mail subject: "#{@wishlist.owner.email} updated their wishlist!"
+  end
 end

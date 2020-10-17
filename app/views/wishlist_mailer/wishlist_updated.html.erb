@@ -1,0 +1,9 @@
+<p>Hi there,</p>
+
+<p>Just so you know, <%= @wishlist.owner.email %> just updated their wishlist, "<%= @wishlist.title %>." Why don't you click the link below and see what they added?</p>
+
+<%= link_to 'Visit wishlist', wishlist_url(@wishlist, user_id: @recipient.id) %>
+
+<p>Happy wishlisting!</p>
+
+<p>Your friends at Wishly</p>

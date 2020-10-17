@@ -26,4 +26,9 @@ class WishlistMailerPreview < ActionMailer::Preview
                   .invited_to_wishlist
   end
 
+  # Preview this email at http://localhost:3000/rails/mailers/wishlist_mailer/wishlist_updated
+  def wishlist_updated
+    # TODO
+  end
+
 end

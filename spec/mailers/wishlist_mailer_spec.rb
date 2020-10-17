@@ -91,4 +91,7 @@ RSpec.describe WishlistMailer, type: :mailer do
     end
   end
 
+  xdescribe 'wishlist_updated' do
+  end
+
 end

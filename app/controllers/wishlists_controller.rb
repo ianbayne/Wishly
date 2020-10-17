@@ -41,7 +41,7 @@ class WishlistsController < ApplicationController
 
     if @wishlist.update(wishlist_params)
       if original_items_count != @wishlist.wishlist_items.count
-        send_wishlist_updated_emails
+        send_wishlist_updated_emails(invitees: @wishlist.invitees)
       end
 
       new_invitees = @wishlist.invitees.to_a.filter do |invitee|
@@ -115,7 +115,10 @@ private
     end
   end
 
-  def send_wishlist_updated_emails
-    # TODO
+  def send_wishlist_updated_emails(invitees:)
+    invitees.each do |invitee|
+      WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: invitee.id)
+                    .wishlist_updated.deliver_later
+    end
   end
 end
