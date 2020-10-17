@@ -66,7 +66,7 @@ RSpec.describe "WishlistShow", type: :system do
         expect(page).not_to have_link('Purchase')
         expect(page).to(have_text(
           "Purchased by #{purchaser.email} on " \
-          "#{purchase.created_at.strftime('%A, %B%e')}")
+          "#{purchase.created_at.strftime('%A, %B %e')}")
         )
       end
     end
