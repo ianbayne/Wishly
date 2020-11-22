@@ -41,7 +41,7 @@ class WishlistsController < ApplicationController
 
     if @wishlist.update(wishlist_params)
       if original_items_count != @wishlist.wishlist_items.count
-        send_wishlist_updated_emails(invitees: @wishlist.invitees)
+        send_wishlist_updated_emails(owner: nil, invitees: @wishlist.invitees)
       end
 
       new_invitees = @wishlist.invitees.to_a.filter do |invitee|
@@ -49,6 +49,7 @@ class WishlistsController < ApplicationController
       end
 
       send_emails(owner: nil, invitees: new_invitees)
+      send_wishlist_updated_emails(invitees: nil)
 
       redirect_to(
         wishlist_path(@wishlist, user_id: @wishlist.owner.id),
@@ -115,10 +116,17 @@ private
     end
   end
 
-  def send_wishlist_updated_emails(invitees:)
-    invitees.each do |invitee|
-      WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: invitee.id)
-                    .wishlist_updated.deliver_later
+  def send_wishlist_updated_emails(owner: @wishlist.owner, invitees:)
+    if owner
+      WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: owner.id)
+                      .own_wishlist_updated.deliver_later
+    end
+
+    if invitees
+      invitees.each do |invitee|
+        WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: invitee.id)
+                      .wishlist_updated.deliver_later
+      end
     end
   end
 end
