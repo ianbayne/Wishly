@@ -27,7 +27,11 @@
             </td>
             <td>
               <% unless wishlist_item.url.blank? %>
-                <%= link_to wishlist_item.url, wishlist_item.url %>
+                <% if wishlist_item.purchase.user == @user %>
+                  <%= link_to wishlist_item.url, wishlist_item.url, class: 'purchased-item-link' %>
+                <% else %>
+                  <span class="purchased-item-link purchased-not-by-me"><%=  wishlist_item.url %></span>
+                <% end %>
               <% end %>
             </td>
             <td class="purchase-button">

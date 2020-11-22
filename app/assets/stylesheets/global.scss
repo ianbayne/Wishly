@@ -66,4 +66,10 @@ form {
   p {
     margin-bottom: 40px;
   }
+  .purchased-item-link {
+    text-decoration: line-through;
+    &.purchased-not-by-me {
+      cursor: not-allowed;
+    }
+  }
 }
