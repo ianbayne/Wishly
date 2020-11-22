@@ -1,0 +1,12 @@
+<p>Hi there,</p>
+
+<p>Thank you for updating your wishlist! If you invited anyone new they've now been notified. If you added any new items, the people you invited in the past have now been notified you added new items.</p>
+
+<p>If you'd like to edit your list again, you can either click the link in one of your previous mails, or click <%= link_to 'here', wishlist_url(@wishlist, user_id: @recipient.id) %>.</p>
+
+<p>If you'd like to create a new wishlist, visit <%= link_to 'Wishly', root_url %> to get started.</p>
+
+<p>Happy wishlisting!</p>
+
+<p>Your friends at Wishly<br>
+<%= link_to root_url, root_url %></p>
