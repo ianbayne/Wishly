@@ -72,9 +72,10 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {
     host: 'https://wishly-app.herokuapp.com'
   }
+  # REF: https://sendgrid.com/docs/for-developers/sending-email/rubyonrails/#configure-actionmailer-to-use-sendgrid
   config.action_mailer.smtp_settings = {
-    user_name:            ENV['SENDGRID_USERNAME'],
-    password:             ENV['SENDGRID_PASSWORD'],
+    user_name:            'apikey',
+    password:             ENV['SENDGRID_API_KEY'],
     domain:               'wishly-app.herokuapp.com',
     address:              'smtp.sendgrid.net',
     port:                 587,
