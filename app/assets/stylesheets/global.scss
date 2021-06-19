@@ -68,8 +68,5 @@ form {
   }
   .purchased-item-link {
     text-decoration: line-through;
-    &.purchased-not-by-me {
-      cursor: not-allowed;
-    }
   }
 }

@@ -1,1 +1,7 @@
-<li style="text-decoration: line-through;"><%= wishlist_item.name %></li>
+<li class="purchased-item-link">
+  <% if wishlist_item.url.blank? %>
+    <%= wishlist_item.name %>
+  <% else %>
+    <%= link_to wishlist_item.name, wishlist_item.url, style: 'color: black' %>
+  <% end %>
+</li>
