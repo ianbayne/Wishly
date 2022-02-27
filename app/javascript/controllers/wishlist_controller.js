@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 
 export default class extends Controller {
   static targets = [ 'itemList', 'itemTemplate', 'inviteeList', 'inviteeTemplate' ];
