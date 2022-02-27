@@ -1,4 +1,4 @@
-import { Controller } from "stimulus";
+import { Controller } from "@hotwired/stimulus"
 import { faker } from "@faker-js/faker";
 
 export default class extends Controller {
