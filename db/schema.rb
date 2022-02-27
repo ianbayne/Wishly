@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_26_072202) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_02_27_041512) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -21,7 +20,7 @@ ActiveRecord::Schema.define(version: 2022_02_26_072202) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -33,8 +32,8 @@ ActiveRecord::Schema.define(version: 2022_02_26_072202) do
     t.text "metadata"
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -47,23 +46,23 @@ ActiveRecord::Schema.define(version: 2022_02_26_072202) do
   create_table "purchases", force: :cascade do |t|
     t.uuid "user_id", null: false
     t.bigint "wishlist_item_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_purchases_on_user_id"
     t.index ["wishlist_item_id"], name: "index_purchases_on_wishlist_item_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "wishlist_invitees", force: :cascade do |t|
     t.uuid "user_id", null: false
     t.uuid "wishlist_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_wishlist_invitees_on_user_id"
     t.index ["wishlist_id"], name: "index_wishlist_invitees_on_wishlist_id"
   end
@@ -71,8 +70,8 @@ ActiveRecord::Schema.define(version: 2022_02_26_072202) do
   create_table "wishlist_items", force: :cascade do |t|
     t.string "name"
     t.uuid "wishlist_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "url"
     t.index ["wishlist_id"], name: "index_wishlist_items_on_wishlist_id"
   end
@@ -80,8 +79,8 @@ ActiveRecord::Schema.define(version: 2022_02_26_072202) do
   create_table "wishlists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.uuid "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
