@@ -19,7 +19,7 @@
       </div>
 
       <label>Wishlist items:</label>
-      <ul data-target='wishlist.itemList'>
+      <ul data-wishlist-target="itemList">
         <%= f.fields_for :wishlist_items do |wishlist_items_form| %>
           <li style='display: flex'>
             <%= wishlist_items_form.text_field :name, disabled: true %>
@@ -29,7 +29,7 @@
       </ul>
       <%= button_tag '+', data: { action: 'click->wishlist#addItem' }, class: 'font-size-p-responsive button add-button' %>
 
-      <template data-target='wishlist.itemTemplate'>
+      <template data-wishlist-target='itemTemplate'>
         <li style='display: flex'>
           <input type='text'>
           <input type='text'>
@@ -40,7 +40,7 @@
     <div class="invitees-content">
       <h3>Invite some people</h3>
       <label>Emails:</label>
-      <ul data-target='wishlist.inviteeList'>
+      <ul data-wishlist-target='inviteeList'>
         <%= f.fields_for :invitees do |invitees_form| %>
           <li>
             <%= invitees_form.email_field :email, disabled: true %>
@@ -49,7 +49,7 @@
       </ul>
       <%= button_tag '+', data: { action: 'click->wishlist#addInvitee' }, class: 'font-size-p-responsive button add-button' %>
 
-      <template data-target='wishlist.inviteeTemplate'>
+      <template data-wishlist-target='inviteeTemplate'>
         <li>
           <input type='email' placeholder='my_friend@their_email.com'>
         </li>
