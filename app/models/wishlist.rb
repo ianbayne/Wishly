@@ -74,13 +74,12 @@ private
   def at_least_one_wishlist_item
     return if wishlist_items.size > 0
 
-    errors[:base] << 'You must have at least one item in your wishlist'
+    errors.add :base, :invalid, message: 'You must have at least one item in your wishlist'
   end
 
-    def at_least_one_invitee
+  def at_least_one_invitee
     return if invitees.size > 0
 
-    errors[:base] << 'You must invite at least one person to your wishlist'
+    errors.add :base, :invalid, message: 'You must invite at least one person to your wishlist'
   end
-
 end
