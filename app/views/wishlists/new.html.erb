@@ -3,7 +3,7 @@
 <div class="section">
   <h1>Create your wishlist</h1>
 
-  <%= form_with model: @wishlist, data: { controller: 'wishlist' } do |f| %>
+  <%= form_with model: @wishlist, data: { controller: 'wishlist', turbo: false } do |f| %>
     <div class="wishlist-content">
       <div>
         <%= f.label :title, 'Wishlist Title:' %>

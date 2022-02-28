@@ -1,1 +1,7 @@
-<%= link_to 'Purchase', wishlist_item_purchase_path(wishlist, wishlist_item, user_id: user_id), method: :post, remote: true, data: { confirm: 'Purchase item?' } %>
+<%= link_to 'Purchase',
+    wishlist_item_purchase_path(wishlist, wishlist_item, user_id: user_id),
+    data: {
+      turbo_confirm: 'Purchase item?',
+      turbo_method: :post
+    }
+%>

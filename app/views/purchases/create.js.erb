@@ -1,6 +1,8 @@
+<% # TODO: Is this file working?? %>
+
 <%= render 'shared/flash' if flash %>
 
-var wishlistItem = document.getElementById('wishlist-item-<%= params[:id] %>');
+ const wishlistItem = document.getElementById('wishlist-item-<%= params[:id] %>');
 
 wishlistItem.getElementsByClassName('purchased-item')[0].innerHTML = '<%= j render partial: "wishlists/purchased_item", locals: { wishlist_item: WishlistItem.find(params[:id]) } %>'
 wishlistItem.getElementsByClassName('purchase-button')[0].innerHTML = '<%= j render partial: "wishlists/cancel_purchase", locals: { wishlist: Wishlist.find(params[:wishlist_id]), wishlist_item: WishlistItem.find(params[:id]), user_id: params[:user_id] } %>';

@@ -13,7 +13,7 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @wishlist_item.wishlist.owner != current_user && purchase.save
-        format.js { flash.now[:notice] = 'Item purchased!' }
+        format.js { flash.now[:notice] = 'Item purchased!' } # TODO: Why isn't this working?
       else
         format.js do
           flash.now[:alert] = 'Something went wrong. Unable to purchase item.'
@@ -29,7 +29,7 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if purchase.user == current_user && purchase.destroy
-        format.js { flash.now[:notice] = 'Purchase cancelled.' }
+        format.js { flash.now[:notice] = 'Purchase cancelled.' } # TODO: Why isn't this working?
       else
         format.js do
           flash.now[:alert] = 'Something went wrong. Unable to cancel purchase'
