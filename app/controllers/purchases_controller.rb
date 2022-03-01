@@ -1,56 +1,36 @@
 class PurchasesController < ApplicationController
   def create
-    current_user   = User.find(params[:user_id])
-    @wishlist_item = WishlistItem.find(params[:id])
+    current_user  = User.find(params[:user_id])
+    wishlist_item = WishlistItem.find(params[:id])
 
-    if @wishlist_item.purchased?
-      redirect_to wishlist_path(@wishlist_item.wishlist, user_id: current_user),
+    if wishlist_item.purchased?
+      redirect_to wishlist_path(wishlist_item.wishlist, user_id: current_user),
         alert: 'Oops! Looks like someone else just purchased that.'
       return
     end
 
-    purchase = Purchase.new(user: current_user, wishlist_item: @wishlist_item)
+    purchase = Purchase.new(user: current_user, wishlist_item: wishlist_item)
 
-    respond_to do |format|
-      if @wishlist_item.wishlist.owner != current_user && purchase.save
-        format.js { flash.now[:notice] = 'Item purchased!' } # TODO: Why isn't this working? Once it works, get rid of following HTML
-        format.html do
-          flash[:notice] = 'Item purchased!'
-          redirect_to wishlist_path(@wishlist_item.wishlist, user_id: current_user)
-        end
-      else
-        format.js do
-          flash.now[:alert] = 'Something went wrong. Unable to purchase item.'
-        end
-        format.html do
-          flash[:alert] = 'Something went wrong. Unable to purchase item.'
-          redirect_to wishlist_path(@wishlist_item.wishlist, user_id: current_user)
-        end
-      end
+    if wishlist_item.wishlist.owner != current_user && purchase.save
+      flash[:notice] = 'Item purchased!'
+    else
+        flash[:alert] = 'Something went wrong. Unable to purchase item.'
     end
+
+    redirect_to wishlist_path(wishlist_item.wishlist, user_id: current_user)
   end
 
   def destroy
-    current_user   = User.find(params[:user_id])
-    @wishlist_item = WishlistItem.find(params[:id])
-    purchase       = @wishlist_item.purchase
+    current_user  = User.find(params[:user_id])
+    wishlist_item = WishlistItem.find(params[:id])
+    purchase      = wishlist_item.purchase
 
-    respond_to do |format|
-      if purchase.user == current_user && purchase.destroy
-        format.js { flash.now[:notice] = 'Purchase cancelled.' } # TODO: Why isn't this working? Once it works, get rid of following HTML
-        format.html do
-          flash[:notice] = 'Purchase cancelled.'
-          redirect_to wishlist_path(@wishlist_item.wishlist, user_id: current_user)
-        end
-      else
-        format.js do
-          flash.now[:alert] = 'Something went wrong. Unable to cancel purchase'
-        end
-        format.html do
-          flash[:alert] = 'Something went wrong. Unable to cancel purchase'
-          redirect_to wishlist_path(@wishlist_item.wishlist, user_id: current_user)
-        end
-      end
+    if purchase.user == current_user && purchase.destroy
+      flash[:notice] = 'Purchase cancelled.'
+    else
+      flash[:alert] = 'Something went wrong. Unable to cancel purchase'
     end
+
+    redirect_to wishlist_path(wishlist_item.wishlist, user_id: current_user)
   end
 end
