@@ -14,11 +14,11 @@ RSpec.describe 'Purchases', type: :request do
   end
 
   describe 'POST /create' do
-    it 'returns http success' do
+    it 'returns http redirect' do
       post "/wishlists/#{wishlist.id}/wishlist_items/#{wishlist_item.id}",
         xhr: true, params: { user_id: invitee.id }
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:redirect)
     end
 
     context 'when the user is the owner of the wishlist' do
@@ -46,10 +46,10 @@ RSpec.describe 'Purchases', type: :request do
         xhr: true, params: { user_id: invitee.id }
     end
 
-    it 'returns http success' do
+    it 'returns http redirect' do
       delete "/wishlists/#{wishlist.id}/wishlist_items/#{wishlist_item.id}",
           xhr: true, params: { user_id: invitee.id }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:redirect)
     end
 
     context 'when the purchase was created by the user' do
