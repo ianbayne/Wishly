@@ -7,7 +7,7 @@
 <div class="section">
   <h1><%= @wishlist.title %></h1>
   <table>
-    <% @wishlist.wishlist_items.each do |wishlist_item| %>
+    <% @wishlist.wishlist_items.includes(purchase: [:user]).each do |wishlist_item| %>
       <% if @wishlist.owner == @user %>
         <tr id="wishlist-item-<%= wishlist_item.id %>">
           <td>
