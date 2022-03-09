@@ -4,8 +4,8 @@ class PurchasesController < ApplicationController
     wishlist_item = WishlistItem.find(params[:id])
 
     if wishlist_item.purchased?
-      redirect_to wishlist_path(wishlist_item.wishlist, user_id: current_user),
-        alert: 'Oops! Looks like someone else just purchased that.'
+      flash[:alert] = 'Oops! Looks like someone else just purchased that.'
+      redirect_to wishlist_path(wishlist_item.wishlist, user_id: current_user), status: 301
       return
     end
 
@@ -14,10 +14,10 @@ class PurchasesController < ApplicationController
     if wishlist_item.wishlist.owner != current_user && purchase.save
       flash[:notice] = 'Item purchased!'
     else
-        flash[:alert] = 'Something went wrong. Unable to purchase item.'
+      flash[:alert] = 'Something went wrong. Unable to purchase item.'
     end
 
-    redirect_to wishlist_path(wishlist_item.wishlist, user_id: current_user)
+    redirect_to wishlist_path(wishlist_item.wishlist, user_id: current_user), status: 301
   end
 
   def destroy
@@ -31,6 +31,6 @@ class PurchasesController < ApplicationController
       flash[:alert] = 'Something went wrong. Unable to cancel purchase'
     end
 
-    redirect_to wishlist_path(wishlist_item.wishlist, user_id: current_user)
+    redirect_to wishlist_path(wishlist_item.wishlist, user_id: current_user), status: 301
   end
 end
