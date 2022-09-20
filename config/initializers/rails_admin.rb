@@ -1,6 +1,14 @@
 RailsAdmin.config do |config|
   config.asset_source = :sprockets
 
+  # REF: https://mensfeld.pl/2014/03/ruby-on-rails-railsadmin-http-basic-authentication/
+  config.authenticate_with do
+    authenticate_or_request_with_http_basic do |username, password|
+      username == Rails.application.credentials.rails_admin[:username] &&
+        password == Rails.application.credentials.rails_admin[:password]
+    end
+  end
+
   ### Popular gems integration
 
   ## == Devise ==
