@@ -72,13 +72,13 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = {
-    host: 'https://wishly-app.herokuapp.com'
+    host: 'https://wishly.fly.dev'
   }
   # REF: https://sendgrid.com/docs/for-developers/sending-email/rubyonrails/#configure-actionmailer-to-use-sendgrid
   config.action_mailer.smtp_settings = {
     user_name:            'apikey',
     password:             ENV['SENDGRID_API_KEY'],
-    domain:               'wishly-app.herokuapp.com',
+    domain:               'wishly.fly.dev',
     address:              'smtp.sendgrid.net',
     port:                 587,
     authentication:       :plain,
