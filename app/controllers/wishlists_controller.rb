@@ -1,5 +1,9 @@
 class WishlistsController < ApplicationController
-  before_action :authenticate_user, only: [:show, :edit, :update]
+  before_action :set_wishlist, only: [:show, :edit, :update]
+  before_action :ensure_wishlist, except: [:new, :create]
+  before_action :set_user, only: [:show, :edit, :update]
+  before_action :authenticate_user, only: [:show]
+  before_action :authenticate_owner, only: [:edit, :update]
 
   def new
     @wishlist = Wishlist.new
@@ -12,10 +16,7 @@ class WishlistsController < ApplicationController
     @wishlist = Wishlist.new(wishlist_params)
     if @wishlist.save
       send_emails
-      redirect_to(
-        wishlist_path(@wishlist, user_id: @wishlist.owner.id),
-        notice: 'Wishlist created!'
-      )
+      redirect_to(wishlist_path(@wishlist, user_id: @wishlist.owner.id), notice: 'Wishlist created!')
     else
       respond_to do |format|
         failure_message = 'Your wishlist could not be created...'
@@ -104,16 +105,32 @@ private
     end
   end
 
-  def authenticate_user
-    @wishlist = Wishlist.find_by(id: params[:id])
-    @user     = User.find_by(id: params[:user_id])
+  def redirect_to_root
+    redirect_to root_path, alert: 'The wishlist you are trying to access ' \
+                                  'does not exist or you do not have ' \
+                                  'access to it.'
+  end
 
-    if @wishlist.nil? ||
-      (@wishlist.owner != @user && !@wishlist.invitees.include?(@user))
-      redirect_to root_path, alert: 'The wishlist you are trying to access ' \
-                                    'does not exist or you do not have ' \
-                                    'access to it.'
-    end
+  def set_wishlist
+    @wishlist = Wishlist.find_by(id: params[:id])
+  end
+
+  def set_user
+    @user = User.find_by(id: params[:user_id])
+  end
+
+  def ensure_wishlist
+    redirect_to_root if @wishlist.nil?
+  end
+
+  def authenticate_user
+    redirect_to_root if (
+      !@wishlist.invitees.include?(@user) && @wishlist.owner != @user
+    )
+  end
+
+  def authenticate_owner
+    redirect_to_root if @wishlist.owner != @user
   end
 
   def send_wishlist_updated_emails(owner: @wishlist.owner, invitees:)
