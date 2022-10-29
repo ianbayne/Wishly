@@ -32,6 +32,15 @@ RailsAdmin.config do |config|
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar = true
 
+  # Hides Attachments, Blob, and VariantRecords from /admin
+  config.included_models = [
+    'Purchase',
+    'User',
+    'Wishlist',
+    'WishlistInvitee',
+    'WishlistItem'
+  ]
+
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
