@@ -39,7 +39,7 @@ gem 'bootsnap', require: false
 # Use Sass to process CSS
 gem 'sassc-rails'
 
-gem 'sidekiq', '6.0.7'
+gem 'sidekiq', '<7'
 
 gem 'rails_admin', '~> 3.0'
 
