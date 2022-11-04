@@ -2,7 +2,7 @@ class WishlistItem < ApplicationRecord
   before_save :add_url_protocol
 
   belongs_to :wishlist
-  has_one :purchase
+  has_one :purchase, dependent: :destroy
 
   validates :name, presence: true
 
