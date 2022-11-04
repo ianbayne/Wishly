@@ -1,7 +1,7 @@
 class Wishlist < ApplicationRecord
-  belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
-  has_many   :wishlist_items
-  has_many   :wishlist_invitees
+  belongs_to :owner, class_name: 'User', foreign_key: 'user_id', dependent: :destroy
+  has_many   :wishlist_items, dependent: :destroy
+  has_many   :wishlist_invitees, dependent: :destroy
   has_many   :invitees, through: :wishlist_invitees, source: :user
 
   accepts_nested_attributes_for :owner
@@ -9,10 +9,11 @@ class Wishlist < ApplicationRecord
                                 :invitees,
                                 reject_if: :all_blank
 
-  validates :title, presence: true
+  validates :title,
+            :invitees,
+            :wishlist_items,
+            presence: true
 
-  validate  :at_least_one_wishlist_item
-  validate  :at_least_one_invitee
   validate  :ensure_all_email_addresses_are_unique
   validate  :ensure_gmail_addresses_are_unique
 
@@ -69,17 +70,5 @@ private
   def strip_part_after_plus_sign(address)
     matches = address.match(EMAIL_RE)
     address = "#{matches[:before_plus]}@#{matches[:domain]}"
-  end
-
-  def at_least_one_wishlist_item
-    return if wishlist_items.size > 0
-
-    errors.add :base, :invalid, message: 'You must have at least one item in your wishlist'
-  end
-
-  def at_least_one_invitee
-    return if invitees.size > 0
-
-    errors.add :base, :invalid, message: 'You must invite at least one person to your wishlist'
   end
 end

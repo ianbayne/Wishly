@@ -6,50 +6,17 @@ RSpec.describe Wishlist, type: :model do
   let(:item)     { WishlistItem.new(name: 'Item') }
   let(:invitee)  { User.new(email: 'invitee@example.com') }
 
-  it 'is valid with a title, an owner, an item, and an invitee' do
-    wishlist.title = 'New wishlist'
-    wishlist.owner = user
-    wishlist.wishlist_items << item
-    wishlist.invitees << invitee
-    wishlist.save
-
-    expect(wishlist).to be_valid
+  describe 'associations' do
+    it { should belong_to(:owner).class_name('User').dependent(:destroy) }
+    it { should have_many(:wishlist_items).dependent(:destroy) }
+    it { should have_many(:wishlist_invitees).dependent(:destroy) }
+    it { should have_many(:invitees) }
   end
 
-  it 'is invalid without a title' do
-    wishlist.owner = user
-    wishlist.wishlist_items << item
-    wishlist.invitees << invitee
-    wishlist.save
-
-    expect(wishlist).not_to be_valid
-  end
-
-  it 'is invalid without an owner' do
-    wishlist.title = 'New wishlist'
-    wishlist.wishlist_items << item
-    wishlist.invitees << invitee
-    wishlist.save
-
-    expect(wishlist).not_to be_valid
-  end
-
-  it 'is invalid without at least one wishlist item' do
-    wishlist.title = 'New wishlist'
-    wishlist.owner = user
-    wishlist.invitees << invitee
-    wishlist.save
-
-    expect(wishlist).not_to be_valid
-  end
-
-  it 'is invalid without at least one invitee' do
-    wishlist.title = 'New wishlist'
-    wishlist.owner = user
-    wishlist.wishlist_items << item
-    wishlist.save
-
-    expect(wishlist).not_to be_valid
+  describe 'validations' do
+    it { should validate_presence_of(:title) }
+    it { should validate_presence_of(:invitees) }
+    it { should validate_presence_of(:wishlist_items) }
   end
 
   it 'has participants with case insensitively unique email addresses' do
