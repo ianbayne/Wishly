@@ -160,7 +160,91 @@ RSpec.describe 'Wishlists', type: :request do
   end
 
   describe 'PUT /update' do
-    # TODO: Add this test
-    xit 'updates the wishlist'
+    let(:owner) { User.create!(email: 'owner@example.com') }
+    let(:invitee) { User.create!(email: 'invitee@example.com') }
+    let(:wishlist) do
+      Wishlist.create!(
+        title: 'Example wishlist',
+        owner: owner,
+        wishlist_items: [
+          WishlistItem.new(name: 'Original item')
+        ],
+        invitees: [
+          invitee
+        ]
+      )
+    end
+
+    it 'creates a new wishlist item when given valid attributes and the correct owner id' do
+      expect do
+        put "/wishlists/#{wishlist.id}", params: {
+          user_id: owner.id,
+          wishlist: {
+            wishlist_items_attributes: {
+              '': {
+                name: 'New item',
+                url: 'https://www.new_url.com'
+              }
+            }
+          }
+        }
+        wishlist.reload
+      end.to change { wishlist.wishlist_items.count }.by 1
+      expect(wishlist.wishlist_items.count).to eq 2
+
+      original_wishlist_item = wishlist.wishlist_items.first
+      new_wishlist_item = wishlist.wishlist_items.last
+
+      expect(original_wishlist_item.name).to eq 'Original item'
+      expect(new_wishlist_item.name).to eq 'New item'
+      expect(new_wishlist_item.url).to eq 'https://www.new_url.com'
+    end
+
+    it 'creates a new wishlist item instead of updating an item when given valid attributes and owner id but the id of an existing item' do
+      expect do
+        put "/wishlists/#{wishlist.id}", params: {
+          user_id: owner.id,
+          wishlist: {
+            wishlist_items_attributes: {
+              wishlist.wishlist_items.last.id => {
+                name: 'New item',
+                url: 'https://www.new_url.com'
+              }
+            }
+          }
+        }
+        wishlist.reload
+      end.to change { wishlist.wishlist_items.count }.by 1
+      expect(wishlist.wishlist_items.count).to eq 2
+
+      original_wishlist_item = wishlist.wishlist_items.first
+      new_wishlist_item = wishlist.wishlist_items.last
+
+      expect(original_wishlist_item.name).to eq 'Original item'
+      expect(new_wishlist_item.name).to eq 'New item'
+      expect(new_wishlist_item.url).to eq 'https://www.new_url.com'
+    end
+
+    it 'redirects to the root url when given valid attributes but the incorrect owner id and does not update the wishlist item' do
+      expect do
+        put "/wishlists/#{wishlist.id}", params: {
+          user_id: invitee.id,
+          wishlist: {
+            wishlist_items_attributes: {
+              '': {
+                name: 'New item',
+                url: 'https://www.new_url.com'
+              }
+            }
+          }
+        }
+        wishlist.reload
+      end.to change { wishlist.wishlist_items.count }.by 0
+
+      expect(wishlist.wishlist_items.count).to eq 1
+      expect(wishlist.wishlist_items.first.name).to eq 'Original item'
+      expect(response).to redirect_to('/')
+      expect(flash[:alert]).to match(/The wishlist you are trying to access does not exist or you do not have access to it/)
+    end
   end
 end
