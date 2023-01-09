@@ -41,3 +41,6 @@ yarn-debug.log*
 !/app/assets/builds/.keep
 
 spec/examples.txt
+
+# fly.io related DB settings, etc.
+fly-io-related*
