@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -19,7 +19,7 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
@@ -42,7 +42,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.delivery_method = :smtp # Mailing handled by mailcatcher
-  config.action_mailer.smtp_settings = { :address => 'localhost', :port => 1025 }
+  config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
   config.action_mailer.default_url_options = { host: 'localhost',
                                                port: 3000,
                                                protocol: :http }
