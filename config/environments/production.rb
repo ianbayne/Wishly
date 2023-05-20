@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -74,14 +74,13 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {
     host: 'https://wishly.fly.dev'
   }
-  # REF: https://sendgrid.com/docs/for-developers/sending-email/rubyonrails/#configure-actionmailer-to-use-sendgrid
+
   config.action_mailer.smtp_settings = {
-    user_name:            'apikey',
-    password:             ENV['SENDGRID_API_KEY'],
-    domain:               'wishly.fly.dev',
-    address:              'smtp.sendgrid.net',
-    port:                 587,
-    authentication:       :plain,
+    user_name: ENV['GMAIL_USERNAME'],
+    password: ENV['GMAIL_PASSWORD'],
+    address: 'smtp.gmail.com',
+    port: 587,
+    authentication: :plain,
     enable_starttls_auto: true
   }
 
@@ -99,7 +98,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
