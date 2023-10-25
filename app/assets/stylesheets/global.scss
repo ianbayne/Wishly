@@ -16,7 +16,8 @@ body {
   margin-left: auto;
   margin-right: auto;
   max-width: 600px;
-  h1, p {
+  h1,
+  p {
     color: color(grey-dark);
   }
   h1 {
@@ -25,7 +26,7 @@ body {
   }
   p {
     font-weight: 400;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
   }
 }
 
@@ -41,7 +42,7 @@ form {
   input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid color(grey);
     font-size: 1em;
@@ -65,8 +66,5 @@ form {
   }
   p {
     margin-bottom: 40px;
-  }
-  .purchased-item-link {
-    text-decoration: line-through;
   }
 }

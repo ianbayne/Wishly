@@ -1,0 +1,31 @@
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__name {
+    &--purchased {
+      text-decoration: line-through;
+    }
+  }
+
+  &__purchase-button {
+    text-decoration: none;
+  }
+}
+
+.field_with_errors {
+  color: #ea616c;
+
+  input {
+    border-color: #ea616c;
+    border-width: 1px;
+
+    &::placeholder {
+      color: #ea616c;
+    }
+  }
+
+  label {
+  }
+}

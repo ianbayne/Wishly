@@ -3,7 +3,11 @@
 @import 'fonts';
 
 @import 'global';
+@import 'utilities';
+
+// Components
 @import 'buttons';
-@import 'header';
-@import 'footer';
+@import 'components/header';
+@import 'components/footer';
 @import 'flash-container';
+@import 'components/wishlist_item';
