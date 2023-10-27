@@ -1,6 +1,7 @@
 <%= link_to 'Cancel purchase',
     wishlist_item_cancel_purchase_path(wishlist, wishlist_item, user_id: user_id),
     data: {
+      turbo_frame: dom_id(wishlist_item),
       turbo_confirm: 'Cancel purchase?',
       turbo_method: :delete
     }

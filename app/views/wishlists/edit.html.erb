@@ -4,7 +4,7 @@
   <h1>Edit your wishlist</h1>
 
   <%= form_with model: @wishlist, data: { controller: 'wishlist' } do |f| %>
-    <%= hidden_field_tag "user_id", "#{@user.id}" %>
+    <%= hidden_field_tag "user_id", "#{@current_user.id}" %>
     <div class="wishlist-content">
       <div>
         <%= f.label :title, 'Wishlist Title:' %>
@@ -21,7 +21,7 @@
       <label>Wishlist items:</label>
       <ul data-wishlist-target="itemList">
         <%= f.fields_for :wishlist_items do |wishlist_items_form| %>
-          <li style='display: flex'>
+          <li class='flex'>
             <%= wishlist_items_form.text_field :name, disabled: true %>
             <%= wishlist_items_form.text_field :url, disabled: true %>
           </li>
@@ -30,7 +30,7 @@
       <%= button_tag '+', data: { action: 'click->wishlist#addItem' }, class: 'font-size-p-responsive button add-button' %>
 
       <template data-wishlist-target='itemTemplate'>
-        <li style='display: flex'>
+        <li class='flex'>
           <input type='text'>
           <input type='text'>
         </li>

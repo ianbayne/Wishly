@@ -1,0 +1,11 @@
+<%= turbo_stream.replace(
+  @wishlist_item, 
+  partial: 'wishlists/purchased_item', 
+  locals: { 
+    wishlist_item: @wishlist_item, 
+    wishlist: @wishlist_item.wishlist, 
+    user: @current_user, 
+    purchased_by_current_user: @current_user == @wishlist_item.purchase.user
+  }
+) %>
+<%= turbo_stream.update 'flash-container', partial: 'shared/flash_container' %>

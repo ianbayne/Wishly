@@ -1,7 +1,27 @@
-<li class="purchased-item-link">
-  <% if wishlist_item.url.blank? %>
-    <%= wishlist_item.name %>
-  <% else %>
-    <%= link_to wishlist_item.name, wishlist_item.url, style: 'color: black' %>
-  <% end %>
-</li>
+<div>
+  <li class="wishlist-item__name--purchased">
+    <% if wishlist_item.url.blank? %> 
+      <%= wishlist_item.name %>
+    <% else %> 
+      <%= link_to wishlist_item.name, wishlist_item.url, style: 'color: black' %> 
+    <% end %>
+  </li>
+</div>
+<div>
+  <% if purchased_by_current_user %>
+    <%= link_to 'Cancel purchase',
+                wishlist_item_cancel_purchase_path(wishlist, wishlist_item, user_id: user.id),
+                class: "wishlist-item__purchase-button",
+                data: {
+                  turbo_confirm: 'Cancel purchase?',
+                  turbo_method: :delete
+                }
+    %> 
+  <% end %> 
+</div>
+<div>
+  <% if !purchased_by_current_user %> 
+    Purchased by <%= wishlist_item.purchase.user.email %>  
+    on <%= wishlist_item.purchase.created_at.strftime("%A, %B %e") %> 
+  <% end %> 
+</div>

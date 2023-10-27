@@ -8,6 +8,11 @@
       <div>
         <%= f.label :title, 'Wishlist Title:' %>
         <%= f.text_field :title, placeholder: 'My birthday wishlist' %>
+        <% @wishlist.errors.messages_for(:title).each do |error_message| %>
+          <div class='field_with_errors'>
+            <%= error_message %>
+          </div>
+        <% end %>
       </div>
 
       <div>
@@ -15,12 +20,17 @@
           <%= owner_form.label :email, 'Your email:' %>
           <%= owner_form.email_field :email, placeholder: 'me@my_email.com' %>
         <% end %>
+        <% @wishlist.errors.messages_for(:'owner.email').each do |error_message| %>
+          <div class='field_with_errors'>
+            <%= error_message %>
+          </div>
+        <% end %>
       </div>
 
       <label>Wishlist items:</label>
       <ul data-wishlist-target="itemList">
         <%= f.fields_for :wishlist_items do |wishlist_items_form| %>
-          <li style="display: flex;">
+          <li class='flex'>
             <%= wishlist_items_form.text_field :name, placeholder: 'New bike' %>
             <%= wishlist_items_form.text_field :url, placeholder: 'https://www.new-bike.com' %>
           </li>
@@ -29,7 +39,7 @@
       <%= button_tag '+', data: { action: 'click->wishlist#addItem' }, class: 'font-size-p-responsive button add-button' %>
 
       <template data-wishlist-target="itemTemplate">
-        <li style='display: flex;'>
+        <li class='flex'>
           <input type='text'>
           <input type='text'>
         </li>

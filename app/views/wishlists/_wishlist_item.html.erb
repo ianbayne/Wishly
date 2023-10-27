@@ -1,0 +1,39 @@
+<%= turbo_frame_tag wishlist_item, class: "wishlist-item" do %>
+  <div>
+    <li>
+      <% if wishlist_item.url.blank? %>
+        <%= wishlist_item.name %>
+      <% else %>
+        <%= link_to wishlist_item.name, wishlist_item.url %>
+      <% end %>
+    </li>
+  </div>
+  <div>
+    <% if !wishlist_item.purchased? %>
+      <%= link_to 'Purchase',
+          wishlist_item_purchase_path(wishlist, wishlist_item, user_id: user.id),
+          class: "wishlist-item__purchase-button",
+          data: {
+            turbo_confirm: 'Purchase item?',
+            turbo_method: :post
+          }
+      %>
+    <% end %>
+
+    <% if wishlist_item.purchased? && wishlist_item.purchase.user == user %>
+      <%= link_to 'Cancel purchase',
+                  wishlist_item_cancel_purchase_path(wishlist, wishlist_item, user_id: user.id),
+                  class: "wishlist-item__purchase-button",
+                  data: {
+                    turbo_confirm: 'Cancel purchase?',
+                    turbo_method: :delete
+                  }
+      %>
+    <% end %>
+  </div>
+  <div>
+    <% if wishlist_item.purchased? && wishlist_item.purchase.user != user %>
+      Purchased by <%= wishlist_item.purchase.user.email %> on <%= wishlist_item.purchase.created_at.strftime("%A, %B %e") %>
+    <% end %>
+  </div>
+<% end %>
