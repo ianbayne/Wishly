@@ -111,7 +111,7 @@ class WishlistsController < ApplicationController
   end
 
   def set_wishlist
-    @wishlist = Wishlist.find_by(id: params[:id])
+    @wishlist = Wishlist.includes(:owner).find_by(id: params[:id])
   end
 
   def set_user
