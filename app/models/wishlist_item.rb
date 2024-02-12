@@ -10,7 +10,7 @@ class WishlistItem < ApplicationRecord
     !!purchase
   end
 
-private
+  private
 
   def add_url_protocol
     return if url.blank? || url_protocol_present?
@@ -19,6 +19,6 @@ private
   end
 
   def url_protocol_present?
-    url[/\Ahttps?:\/\//]
+    url[%r{\Ahttps?://}]
   end
 end

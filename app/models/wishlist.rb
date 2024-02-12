@@ -20,20 +20,20 @@ class Wishlist < ApplicationRecord
   EMAIL_RE = Regexp.new(/(?<before_plus>.+)\+(?<after_plus>.+)@(?<domain>.+)/)
 
   def participants
-    participants = [self.owner] + self.invitees
+    participants = [owner] + invitees
     participants.compact
   end
 
-private
+  private
 
   def ensure_all_email_addresses_are_unique
-    email_addresses     = self.participants.map(&:email)
+    email_addresses     = participants.map(&:email)
     downcased_addresses = email_addresses.map(&:downcase)
     add_error_if_not_unique(downcased_addresses)
   end
 
   def ensure_gmail_addresses_are_unique
-    return if self.owner.nil? || self.owner.email.blank?
+    return if owner.nil? || owner.email.blank?
 
     gmail_addresses = find_gmail_users
     gmail_addresses.compact
@@ -43,13 +43,11 @@ private
   end
 
   def add_error_if_not_unique(addresses)
-    if addresses.length != addresses.uniq.length
-      errors.add(:wishlist, 'email addresses must be unique.')
-    end
+    errors.add(:wishlist, 'email addresses must be unique.') if addresses.length != addresses.uniq.length
   end
 
   def find_gmail_users
-    email_addresses = self.participants.map(&:email)
+    email_addresses = participants.map(&:email)
     email_addresses.filter { |address| address.include?('gmail.com') }
   end
 

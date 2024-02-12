@@ -9,7 +9,7 @@ class PurchasesController < ApplicationController
       return
     end
 
-    purchase = Purchase.new(user: current_user, wishlist_item: wishlist_item)
+    purchase = Purchase.new(user: current_user, wishlist_item:)
 
     if wishlist_item.wishlist.owner != current_user && purchase.save
       flash[:notice] = 'Item purchased!'

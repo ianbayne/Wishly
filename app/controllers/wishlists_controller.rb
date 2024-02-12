@@ -1,9 +1,9 @@
 class WishlistsController < ApplicationController
-  before_action :set_wishlist, only: [:show, :edit, :update]
-  before_action :ensure_wishlist, except: [:new, :create]
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_wishlist, only: %i[show edit update]
+  before_action :ensure_wishlist, except: %i[new create]
+  before_action :set_user, only: %i[show edit update]
   before_action :authenticate_user, only: [:show]
-  before_action :authenticate_owner, only: [:edit, :update]
+  before_action :authenticate_owner, only: %i[edit update]
 
   def new
     @wishlist = Wishlist.new
@@ -30,11 +30,9 @@ class WishlistsController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     original_items_count = @wishlist.wishlist_items.count
@@ -69,24 +67,24 @@ class WishlistsController < ApplicationController
     end
   end
 
-private
+  private
 
   def wishlist_params
     params.require(:wishlist).permit(
       :id,
       :title,
-      owner_attributes: [
-        :id,
-        :email
+      owner_attributes: %i[
+        id
+        email
       ],
-      wishlist_items_attributes: [
-        :id,
-        :name,
-        :url
+      wishlist_items_attributes: %i[
+        id
+        name
+        url
       ],
-      invitees_attributes: [
-        :id,
-        :email
+      invitees_attributes: %i[
+        id
+        email
       ]
     )
   end
@@ -124,19 +122,18 @@ private
   end
 
   def authenticate_user
-    redirect_to_root if (
+    redirect_to_root if
       !@wishlist.invitees.include?(@user) && @wishlist.owner != @user
-    )
   end
 
   def authenticate_owner
     redirect_to_root if @wishlist.owner != @user
   end
 
-  def send_wishlist_updated_emails(owner: @wishlist.owner, invitees:)
+  def send_wishlist_updated_emails(invitees:, owner: @wishlist.owner)
     if owner
       WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: owner.id)
-                      .own_wishlist_updated.deliver_later
+                    .own_wishlist_updated.deliver_later
     end
 
     if invitees
