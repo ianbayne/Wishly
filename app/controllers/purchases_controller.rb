@@ -7,7 +7,7 @@ class PurchasesController < ApplicationController
 
     if @wishlist_item.purchased?
       flash[:alert] = 'Oops! Looks like someone else just purchased that.'
-      redirect_to wishlist_path(wishlist_item.wishlist, user_id: @current_user), status: 301
+      redirect_to wishlist_path(@wishlist_item.wishlist, user_id: @current_user), status: 301
       return
     end
 
@@ -47,8 +47,8 @@ class PurchasesController < ApplicationController
       respond_to do |format|
         format.turbo_stream { flash.now[:notice] = success_message }
         format.html do
-          redirect_to wishlist_path(wishlist_item.wishlist, user_id: @current_user), status: 301,
-                                                                                     notice: success_message
+          redirect_to wishlist_path(@wishlist_item.wishlist, user_id: @current_user), status: 301,
+                                                                                      notice: success_message
         end
       end
     else
@@ -57,8 +57,8 @@ class PurchasesController < ApplicationController
       respond_to do |format|
         format.turbo_stream { flash.now[:alert] = failure_message }
         format.html do
-          redirect_to wishlist_path(wishlist_item.wishlist, user_id: @current_user), status: :unprocessable_entity,
-                                                                                     alert: failure_message
+          redirect_to wishlist_path(@wishlist_item.wishlist, user_id: @current_user), status: :unprocessable_entity,
+                                                                                      alert: failure_message
         end
       end
     end
