@@ -38,14 +38,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_27_041512) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "purchases", force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.bigint "wishlist_item_id", null: false
+    t.integer "wishlist_item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_purchases_on_user_id"

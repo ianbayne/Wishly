@@ -15,7 +15,7 @@ class WishlistsController < ApplicationController
   def create
     @wishlist = Wishlist.new(wishlist_params)
     if @wishlist.save
-      send_emails
+      SendEmails.new(owner: @wishlist.owner, invitees: @wishlist.invitees).call
       redirect_to(wishlist_path(@wishlist, user_id: @wishlist.owner.id), notice: 'Wishlist created!')
     else
       respond_to do |format|
@@ -47,7 +47,7 @@ class WishlistsController < ApplicationController
         !original_invitees.include? invitee
       end
 
-      send_emails(owner: nil, invitees: new_invitees)
+      SendEmails.new(owner: nil, invitees: new_invitees).call
       send_wishlist_updated_emails(invitees: nil)
 
       redirect_to(
@@ -87,20 +87,6 @@ class WishlistsController < ApplicationController
         email
       ]
     )
-  end
-
-  def send_emails(owner: @wishlist.owner, invitees: @wishlist.invitees)
-    if owner
-      WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: owner.id)
-                    .new_wishlist_created.deliver_later
-    end
-
-    if invitees
-      invitees.each do |invitee|
-        WishlistMailer.with(wishlist_id: @wishlist.id, recipient_id: invitee.id)
-                      .invited_to_wishlist.deliver_later
-      end
-    end
   end
 
   def redirect_to_root
