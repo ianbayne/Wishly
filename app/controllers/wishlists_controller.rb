@@ -35,6 +35,7 @@ class WishlistsController < ApplicationController
   def edit; end
 
   def update
+    # TODO: This method is quite big. Refactor into something smaller
     original_items_count = @wishlist.wishlist_items.count
     original_invitees = @wishlist.invitees.to_a
 
