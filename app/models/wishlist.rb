@@ -14,27 +14,26 @@ class Wishlist < ApplicationRecord
             :wishlist_items,
             presence: true
 
-  validate  :ensure_all_email_addresses_are_unique
-  validate  :ensure_gmail_addresses_are_unique
+  validate  :ensure_all_email_addresses_are_unique, unless: -> { owner.nil? }
+  validate  :ensure_gmail_addresses_are_unique, unless: -> { owner.nil? }
 
   EMAIL_RE = Regexp.new(/(?<before_plus>.+)\+(?<after_plus>.+)@(?<domain>.+)/)
 
-  def participants
-    participants = [owner] + invitees
-    participants.compact
+  def participants_email_addresses
+    # Interestingly, `invitees.pluck` and `invitees.select` both return empty arrays.
+    # TODO: Look further into this
+    email_addresses = [owner.email] + invitees.map(&:email)
+    email_addresses.compact
   end
 
   private
 
   def ensure_all_email_addresses_are_unique
-    email_addresses     = participants.map(&:email)
-    downcased_addresses = email_addresses.map(&:downcase)
+    downcased_addresses = participants_email_addresses.map(&:downcase)
     add_error_if_not_unique(downcased_addresses)
   end
 
   def ensure_gmail_addresses_are_unique
-    return if owner.nil? || owner.email.blank?
-
     gmail_addresses = find_gmail_users
     gmail_addresses.compact
     stripped_addresses = strip_addresses(gmail_addresses)
@@ -47,8 +46,7 @@ class Wishlist < ApplicationRecord
   end
 
   def find_gmail_users
-    email_addresses = participants.map(&:email)
-    email_addresses.filter { |address| address.include?('gmail.com') }
+    participants_email_addresses.filter { |address| address.include?('gmail.com') }
   end
 
   def strip_addresses(addresses)
